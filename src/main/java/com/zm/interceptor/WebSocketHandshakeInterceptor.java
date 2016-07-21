@@ -19,9 +19,9 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
   @Override
   public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 								 Map<String, Object> attributes) throws Exception {
-	if(request.getHeaders().containsKey("Sec-WebSocket-Extensions")) {
-	  request.getHeaders().set("Sec-WebSocket-Extensions", "permessage-deflate");
-	}
+//	if(request.getHeaders().containsKey("Sec-WebSocket-Extensions")) {
+//	  request.getHeaders().set("Sec-WebSocket-Extensions", "permessage-deflate");
+//	}
 
 	if (request instanceof ServletServerHttpRequest) {
 	  ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
