@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,9 +35,11 @@
       margin: 0;
     }
   </style>
-
+  <c:set var="ctx" value="${pageContext.request.contextPath}" />
   <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
-
+  <link href="${ctx}/static/lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet" />
+  <link href="${ctx}/static/lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet" />
+  <link href="${ctx}/static/css/chat.css" rel="stylesheet" />
   <script type="text/javascript">
     var ws = null;
     var url = null;
@@ -55,10 +56,18 @@
         alert('Select whether to use W3C WebSocket or SockJS');
         return;
       }
-
       ws = new WebSocket('ws://localhost:8080/ws');
-      /* (url.indexOf('sockjs') != -1) ?
-       new SockJS(url, undefined, {protocols_whitelist: transports}) :  */
+//      if ('WebSocket' in window) {
+//        alert("WebSocket");
+//        websocket = new WebSocket("ws://localhost:8080/ws");
+//      } else if ('MozWebSocket' in window) {
+//        alert("MozWebSocket");
+//        websocket = new MozWebSocket("ws://ws");
+//      } else {
+//
+//        alert("SockJS");
+//        websocket = new SockJS("http://localhost:8080/sockjs/ws");
+//      }
 
       ws.onopen = function () {
         setConnected(true);

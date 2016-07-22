@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import com.zm.service.WebSocketService;
 import com.zm.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,18 +15,27 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 public class SystemWebSocketHandler implements WebSocketHandler {
+  private static final Logger logger;
+  private static final ArrayList<WebSocketSession> users;
 
-  private static final ArrayList<WebSocketSession> users = new ArrayList<WebSocketSession>();
+  static {
+	users = new ArrayList<>();
+	logger = LoggerFactory.getLogger(SystemWebSocketHandler.class);
+  }
 
   @Autowired
   private WebSocketService webSocketService;
 
   @Override
   public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-	System.out.println("ConnectionEstablished");
-	int num = webSocketService.getUnReadNews((String) session.getAttributes().get("id"));
+	logger.debug("connect to the websocket success......");
 	users.add(session);
-	session.sendMessage(new TextMessage(num + ""));
+	String userName = (String) session.getAttributes().get(Constants.WEBSOCKET_USERNAME);
+	if (userName != null) {
+	//查询未读消息
+	  int count = webSocketService.getUnReadNews((String) session.getAttributes().get(Constants.WEBSOCKET_USERNAME));
+	  session.sendMessage(new TextMessage(count + ""));
+	}
   }
 
   @Override
@@ -37,11 +48,13 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 	if (session.isOpen()) {
 	  session.close();
 	}
+	logger.debug("websocket connection closed......");
 	users.remove(session);
   }
 
   @Override
   public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+	logger.debug("websocket connection closed......");
 	users.remove(session);
   }
 
@@ -87,5 +100,4 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 	  }
 	}
   }
-
 }
