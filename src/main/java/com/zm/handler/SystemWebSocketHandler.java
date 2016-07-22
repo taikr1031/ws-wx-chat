@@ -19,7 +19,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
   private static final ArrayList<WebSocketSession> users;
 
   static {
-	users = new ArrayList<>();
+	users = new ArrayList<WebSocketSession>();
 	logger = LoggerFactory.getLogger(SystemWebSocketHandler.class);
   }
 

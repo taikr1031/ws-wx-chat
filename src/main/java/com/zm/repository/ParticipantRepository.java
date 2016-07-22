@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service("participantRepository")
 public class ParticipantRepository {
 
-  private Map<String, User> activeSessions = new ConcurrentHashMap<>();
+  private Map<String, User> activeSessions = new ConcurrentHashMap<String, User>();
 
   public void add(String sessionId, User event) {
 	activeSessions.put(sessionId, event);
