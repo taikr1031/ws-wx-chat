@@ -37,9 +37,6 @@
   </style>
   <c:set var="ctx" value="${pageContext.request.contextPath}" />
   <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
-  <link href="${ctx}/static/lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet" />
-  <link href="${ctx}/static/lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet" />
-  <link href="${ctx}/static/css/chat.css" rel="stylesheet" />
   <script type="text/javascript">
     var ws = null;
     var url = null;
@@ -64,7 +61,6 @@
 //        alert("MozWebSocket");
 //        websocket = new MozWebSocket("ws://ws");
 //      } else {
-//
 //        alert("SockJS");
 //        websocket = new SockJS("http://localhost:8080/sockjs/ws");
 //      }
