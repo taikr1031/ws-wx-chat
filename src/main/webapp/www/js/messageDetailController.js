@@ -51,7 +51,64 @@ angular.module('wechat.messageDetailController', [])
           $timeout(function () {
             viewScroll.scrollBottom();
           }, 0);
+          connect();
         });
+
+
+
+
+        var ws = null;
+        var url = null;
+        var transports = [];
+
+        var connect = function() {
+          ws = new WebSocket('ws://' + IP + ':' + PORT + '/ws');
+          ws.onopen = function () {
+            setConnected(true);
+            log('Info: connection opened.');
+          };
+
+          ws.onmessage = function (event) {
+            log('Received: ' + event.data);
+            var data = markMessage(event.data, 'TEXT');
+            $scope.messageDetils.push(data);
+            viewScroll.scrollBottom();
+          };
+
+          ws.onclose = function (event) {
+            setConnected(false);
+            log('Info: connection closed.');
+            log(event);
+          };
+        }
+
+        var disconnect = function() {
+          if (ws != null) {
+            ws.close();
+            ws = null;
+          }
+          setConnected(false);
+        }
+
+        var sendMessage = function(message) {
+          if (ws != null) {
+            log('sendMessage: ' + message);
+            ws.send(message);
+          } else {
+            alert('connection not established, please connect.');
+          }
+        }
+
+        var log = function(message) {
+          console.log(message);
+        }
+
+        var setConnected = function(connected) {
+        }
+
+
+
+
 
         /* LOCATION*/
         var location = {
@@ -220,18 +277,25 @@ angular.module('wechat.messageDetailController', [])
         };
         /* VOICE */
 
-        /* TEXT */
-        $scope.sendText = function () {
+        var markMessage = function(msg, type) {
           var data = {};
-          data.content = $scope.msg;
+          data.content = msg;
           data.isFromeMe = true;
           data.time = new Date();
-          data.type = 'TEXT';
+          data.type = type;
+          return data;
+        }
+
+        /* TEXT */
+        $scope.sendText = function () {
+          sendMessage($scope.msg)
+          var data = markMessage($scope.msg, 'TEXT');
           $scope.messageDetils.push(data);
           messageService.sendText($scope.message.openid, $scope.msg);
           $scope.msg = '';
           viewScroll.scrollBottom();
         };
+
 
         $scope.toggleInput = function (isInputText) {
           $scope.isInputText = !isInputText;

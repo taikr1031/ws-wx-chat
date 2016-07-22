@@ -2,6 +2,13 @@ package com.zm.util;
 
 public class Constants {
 
+//  public final static String HOST = "192.168.1.7";
+  public final static String HOST = "10.68.19.114";
+
+  public final static String PORT = "8080";
+
   public final static String WEBSOCKET_USERNAME = "WEBSOCKET_USERNAME";
-  public static String SESSION_USERNAME = "SESSION_USERNAME";
+
+  public final static String SESSION_USERNAME = "SESSION_USERNAME";
+
 }
