@@ -72,7 +72,9 @@ angular.module('wechat.messageDetailController', [])
             log('Received: ' + event.data);
             var data = markMessage(event.data, 'TEXT');
             $scope.messageDetils.push(data);
-            viewScroll.scrollBottom();
+            $timeout(function () {
+              viewScroll.scrollBottom();
+            }, 0);
           };
 
           ws.onclose = function (event) {
