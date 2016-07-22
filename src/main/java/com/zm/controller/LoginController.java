@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.socket.TextMessage;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -20,6 +21,7 @@ import java.util.Date;
 @Controller
 public class LoginController {
 //  @Autowired
+//  @Resource
 //  private SimpMessagingTemplate messagingTemplate;
   @Autowired
   private ParticipantRepository participantRepository;
