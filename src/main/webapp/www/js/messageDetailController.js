@@ -67,7 +67,6 @@ angular.module('wechat.messageDetailController', [])
             setConnected(true);
             log('Info: connection opened.');
           };
-
           ws.onmessage = function (event) {
             log('Received: ' + event.data);
             var data = markMessage(event.data, 'TEXT');
@@ -76,7 +75,6 @@ angular.module('wechat.messageDetailController', [])
               viewScroll.scrollBottom();
             }, 0);
           };
-
           ws.onclose = function (event) {
             setConnected(false);
             log('Info: connection closed.');
@@ -137,8 +135,6 @@ angular.module('wechat.messageDetailController', [])
 
         var openLocation = function() {
           alert('东经：' + parseFloat(location.longitude) + '， 北纬：' + parseFloat(location.latitude));
-          console.log(parseFloat(location.longitude));
-          console.log(parseFloat(location.latitude));
           wx.openLocation({
             latitude: parseFloat(location.latitude), // 纬度，浮点数，范围为90 ~ -90
             longitude: parseFloat(location.longitude), // 经度，浮点数，范围为180 ~ -180。

@@ -56,6 +56,7 @@ angular.module('wechat.messageController', [])
       };
       $scope.$on("$ionicView.beforeEnter", function () {
         // console.log($scope.messages);
+        messageService.setFriendSessionInfo(OWN_OPEN_ID);
         $scope.messages = messageService.getAllMessages();
         $scope.popup = {
           isPopup: false,

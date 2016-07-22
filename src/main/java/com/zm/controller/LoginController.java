@@ -1,19 +1,14 @@
 package com.zm.controller;
 
-import com.zm.handler.SystemWebSocketHandler;
 import com.zm.model.User;
 import com.zm.repository.ParticipantRepository;
 import com.zm.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.socket.TextMessage;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -49,6 +44,15 @@ public class LoginController {
 //	}
 	participantRepository.add(httpRequest.getSession().getId(), user);
 	return "redirect:/chart";
+  }
+
+  @RequestMapping("/loginSession/{openid}")
+  public void loginSession(@PathVariable("openid") String openid, HttpServletRequest httpRequest) throws ServletException {
+	User user = new User();
+	user.setUsername(openid);
+	user.setTime(new Date());
+	httpRequest.getSession().setAttribute(Constants.SESSION_USERNAME, user);
+	participantRepository.add(httpRequest.getSession().getId(), user);
   }
 
 }

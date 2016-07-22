@@ -32,7 +32,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 	users.add(session);
 	String userName = (String) session.getAttributes().get(Constants.WEBSOCKET_USERNAME);
 	if (userName != null) {
-	//查询未读消息
+	  //查询未读消息
 	  int count = webSocketService.getUnReadNews(userName);
 	  session.sendMessage(new TextMessage(count + ""));
 	}
@@ -41,7 +41,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
   @Override
   public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 	logger.debug("websocket sendMessage: " + message);
-		sendMessageToUsers((TextMessage) message);
+	sendMessageToUser((String) session.getAttributes().get("WEBSOCKET_USERNAME"),(TextMessage) message);
   }
 
   @Override

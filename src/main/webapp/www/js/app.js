@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var IP = '192.168.1.6';
 var PORT = '8080';
+var OWN_OPEN_ID = 'oMPxav8gQa7VgRFjILtzRX_lhymE';
 
 angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.messageController',
       'wechat.messageDetailController', 'wechat.routes',

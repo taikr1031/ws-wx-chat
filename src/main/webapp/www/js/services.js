@@ -162,7 +162,13 @@ angular.module('wechat.services', [])
             }
           }
         },
-
+        setFriendSessionInfo: function(ownOpenId) {
+          var url = 'http://' + IP + ':' + PORT + '/loginSession/' + ownOpenId;
+          console.log('setFriendSessionInfo: ' + url);
+          $http.get(url).then(function(response) {
+            console.log(ownOpenId + ' setFriendSessionInfo success!');
+          });
+        },
         sendText: function (openid, msg) {
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=TEXT&openid=' + openid + '&content=' + msg;
           return $http.get(url).then(function (response) {
@@ -176,8 +182,6 @@ angular.module('wechat.services', [])
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=IMAGE&openid=' + openid + '&content=' + msg;
           return $http.get(url).then(function (response) {
             console.log('IMAGE success');
-            //users = response.data.results;
-            //return response.data.results;
           });
         },
 
@@ -185,8 +189,6 @@ angular.module('wechat.services', [])
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=VOICE&openid=' + openid + '&content=' + mediaId;
           return $http.get(url).then(function (response) {
             console.log('VOICE success');
-            //users = response.data.results;
-            //return response.data.results;
           });
         },
 
