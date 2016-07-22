@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.socket.TextMessage;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,8 @@ import java.util.Date;
 
 @Controller
 public class LoginController {
-
-  private SimpMessagingTemplate messagingTemplate;
+//  @Autowired
+//  private SimpMessagingTemplate messagingTemplate;
   @Autowired
   private ParticipantRepository participantRepository;
 
@@ -37,8 +38,8 @@ public class LoginController {
   public String login(HttpServletRequest httpRequest, User user) throws ServletException {
 	user.setTime(new Date());
 	httpRequest.getSession().setAttribute(Constants.SESSION_USERNAME, user);
-	SystemWebSocketHandler handler = new SystemWebSocketHandler();
-//	handler.sendMessageToUser();
+//	SystemWebSocketHandler handler = new SystemWebSocketHandler();
+//	handler.sendMessageToUser(user.getUsername(), new TextMessage(user.getUsername() + "load"));
 
 //	messagingTemplate.convertAndSend(LOGIN, user);
 //	if (participantRepository.getActiveSessions().containsKey(httpRequest.getSession().getId())) {

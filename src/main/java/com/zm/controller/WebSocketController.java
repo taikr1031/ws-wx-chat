@@ -25,7 +25,7 @@ public class WebSocketController {
   }
 
   @RequestMapping("toClient")
-  public String toClient() {
+  public String toClient(HttpServletRequest request) {
 	return "client";
   }
 

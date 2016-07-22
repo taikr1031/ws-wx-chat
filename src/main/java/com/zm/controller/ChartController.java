@@ -2,6 +2,7 @@ package com.zm.controller;
 
 import com.zm.model.User;
 import com.zm.repository.ParticipantRepository;
+import com.zm.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,11 @@ public class ChartController {
 
   @RequestMapping(value = "/chart", method = RequestMethod.GET)
   public String chartPage(HttpServletRequest request, Model model) throws AccessDeniedException {
-	if (request.getSession().getAttribute("user") == null) {
+	if (request.getSession().getAttribute(Constants.SESSION_USERNAME) == null) {
 	  throw new AccessDeniedException("login please");
 	}
-	User user = (User) request.getSession().getAttribute("user");
-	model.addAttribute("username", user.getUsername());
+	User user = (User) request.getSession().getAttribute(Constants.SESSION_USERNAME);
+	model.addAttribute("participant.username", user.getUsername());
 	return "chart";
   }
 

@@ -33,22 +33,23 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 	String userName = (String) session.getAttributes().get(Constants.WEBSOCKET_USERNAME);
 	if (userName != null) {
 	//查询未读消息
-	  int count = webSocketService.getUnReadNews((String) session.getAttributes().get(Constants.WEBSOCKET_USERNAME));
+	  int count = webSocketService.getUnReadNews(userName);
 	  session.sendMessage(new TextMessage(count + ""));
 	}
   }
 
   @Override
   public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-	sendMessageToUsers((TextMessage) message);
+	logger.debug("websocket sendMessage: " + message);
+		sendMessageToUsers((TextMessage) message);
   }
 
   @Override
   public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+	logger.debug("websocket transport error......");
 	if (session.isOpen()) {
 	  session.close();
 	}
-	logger.debug("websocket connection closed......");
 	users.remove(session);
   }
 

@@ -4,9 +4,9 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>WebSocket聊天室</title>
-  <link href="/lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet" />
-  <link href="/lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet" />
-  <link href="/css/chat.css" rel="stylesheet" />
+  <link href="/lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet"/>
+  <link href="/css/chat.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -18,13 +18,10 @@
         </p>
         <form method="post" action="/login">
           <div class="form-group">
-            <input type="text" class="form-control login-field"
-                   placeholder="请输入您的姓名" name="username" /> <label
-                  class="login-field-icon fui-user" for="login-name">
-            姓名</label>
+            <input type="text" value="zm  " class="form-control login-field" placeholder="请输入您的姓名" name="username"/>
+            <label class="login-field-icon fui-user" for="login-name">姓名</label>
           </div>
-          <input class="btn btn-primary btn-lg btn-block"
-                 type="submit" value="进入聊天室" />
+          <input class="btn btn-primary btn-lg btn-block" type="submit" value="进入聊天室"/>
         </form>
       </div>
     </div>

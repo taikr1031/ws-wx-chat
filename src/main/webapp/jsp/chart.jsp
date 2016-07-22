@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en" ng-app="springChat">
 <head>
 <meta charset="utf-8" />
 <title>Spring WebSocket Chat</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet" />
-<link href="lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet" />
-<link href="lib/angularjs-toaster/toaster.css" rel="stylesheet" />
-<link href="css/chat.css" rel="stylesheet" />
+<link href="/lib/flat-ui/dist/css/vendor/bootstrap.min.css" rel="stylesheet" />
+<link href="/lib/flat-ui/dist/css/flat-ui.css" rel="stylesheet" />
+<link href="/lib/angularjs-toaster/toaster.css" rel="stylesheet" />
+<link href="/css/chat.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -15,8 +16,7 @@
     <toaster-container></toaster-container>
     <input type="hidden" th:value="${username}" id="username" ng-init="initUsername()">
     <div class="row">
-      <nav class="navbar navbar-inverse navbar-embossed"
-        role="navigation">
+      <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
           <h1>WebSocket在线聊天室</h1>
         </div>
@@ -29,9 +29,9 @@
         <h4>在线聊天室 [{{participants.length}}]</h4>
         <div class="share">
           <ul ng-repeat="participant in participants">
-            <li><span class="input-icon fui-new"
-              ng-show="participant.typing"></span> <span
-              class="input-icon fui-user" ng-show="!participant.typing"></span>
+            <li>
+              <span class="input-icon fui-new" ng-show="participant.typing"></span>
+              <span class="input-icon fui-user" ng-show="!participant.typing"></span>
               <span ng-bind="participant.username"></span>
             </li>
           </ul>
