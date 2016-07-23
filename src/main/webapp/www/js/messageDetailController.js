@@ -286,7 +286,7 @@ angular.module('wechat.messageDetailController', [])
 
         /* TEXT */
         $scope.sendText = function () {
-          sendMessage($scope.msg)
+          sendMessage($scope.msg);
           var data = markMessage($scope.msg, 'TEXT');
           $scope.messageDetils.push(data);
           messageService.sendText($scope.message.openid, $scope.msg);
