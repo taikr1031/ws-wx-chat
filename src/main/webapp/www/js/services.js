@@ -169,6 +169,16 @@ angular.module('wechat.services', [])
             console.log(ownOpenId + ' setFriendSessionInfo success!');
           });
         },
+        isLoginSession: function(ownOpenId) {
+          var url = 'http://' + IP + ':' + PORT + '/isLoginSession/' + ownOpenId;
+          console.log('setFriendSessionInfo: ' + url);
+          $http.get(url).then(function(response) {
+            if(response.data == false) {
+              return response.data;
+
+            }
+          });
+        },
         sendText: function (openid, msg) {
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=TEXT&openid=' + openid + '&content=' + msg;
           return $http.get(url).then(function (response) {

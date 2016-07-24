@@ -8,12 +8,13 @@ var PORT = '8080';
 var OWN_OPEN_ID = 'oMPxav8gQa7VgRFjILtzRX_lhymE';
 
 angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.messageController',
-      'wechat.messageDetailController', 'wechat.routes',
+      'wechat.messageDetailController', 'wechat.settingController', 'wechat.routes',
       'wechat.services', 'wechat.directives', 'monospaced.elastic'
     ])
 
-    .config(['$ionicConfigProvider', function ($ionicConfigProvider) {
-      $ionicConfigProvider.tabs.position('bottom'); // other values: top
+    .config(['$ionicConfigProvider', function ($rootScope, $ionicConfigProvider) {
+      $rootScope.OWN_OPEN_ID = '';
+      //$ionicConfigProvider.tabs.position('bottom'); // other values: top
     }])
 
     .run(function ($ionicPlatform, $http, messageService, dateService) {

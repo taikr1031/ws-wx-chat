@@ -50,5 +50,5 @@ angular.module('wechat.routes', [])
             }
           });
 
-      $urlRouterProvider.otherwise("/tab/message");
+      $urlRouterProvider.otherwise("/tab/setting");
     });

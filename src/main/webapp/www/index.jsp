@@ -16,6 +16,7 @@
   <script src="/www/js/controllers.js"></script>
   <script src="/www/js/messageController.js"></script>
   <script src="/www/js/messageDetailController.js"></script>
+  <script src="/www/js/settingController.js"></script>
   <script src="/www/js/routes.js"></script>
   <script src="/www/js/services.js"></script>
   <script src="/www/js/directives.js"></script>

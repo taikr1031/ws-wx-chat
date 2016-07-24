@@ -6,6 +6,7 @@ angular.module('springChat.controllers', ['toaster'])
       $scope.sendTo = 'everyone';
       $scope.participants = [];
       $scope.messages = [];
+      $scope.friends = [];
       $scope.newMessage = '';
 
       $scope.sendMessage = function () {

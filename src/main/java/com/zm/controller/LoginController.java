@@ -31,4 +31,15 @@ public class LoginController {
 	participantRepository.add(httpRequest.getSession().getId(), user);
   }
 
+  @RequestMapping("/isLoginSession/{openid}")
+  public boolean isLoginSession(@PathVariable("openid") String openid, HttpServletRequest httpRequest) throws ServletException {
+	if(httpRequest.getSession().getAttribute(Constants.SESSION_USERNAME) == null) {
+	  return false;
+	}
+	if(!((User)httpRequest.getSession().getAttribute(Constants.SESSION_USERNAME)).getUsername().equals(openid)) {
+	  return false;
+	}
+	return true;
+  }
+
 }

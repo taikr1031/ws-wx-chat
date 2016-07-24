@@ -5,6 +5,7 @@ angular.module('wechat.messageDetailController', [])
       function ($scope, $stateParams, messageService, $ionicScrollDelegate, $ionicActionSheet, $timeout, $ionicLoading) {
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
         var beginDate;
+        // 聊天界面中录音按钮开启（down）和停止（up）事件绑定
         $('#voiceBtn').bind('touchstart', function () {
           console.log('touchstart');
           beginDate = new Date();
@@ -41,6 +42,7 @@ angular.module('wechat.messageDetailController', [])
           }, 200);
         };
 
+        // 页面载入事件
         $scope.$on("$ionicView.beforeEnter", function () {
           $scope.message = messageService.getMessageById($stateParams.messageId);
           $scope.message.noReadMessages = 0;
@@ -61,6 +63,7 @@ angular.module('wechat.messageDetailController', [])
         var url = null;
         var transports = [];
 
+        // 连接到spring的websocket
         var connect = function() {
           ws = new WebSocket('ws://' + IP + ':' + PORT + '/ws');
           ws.onopen = function () {
@@ -69,7 +72,7 @@ angular.module('wechat.messageDetailController', [])
           };
           ws.onmessage = function (event) {
             log('Received: ' + event.data);
-            var data = markMessage(event.data, 'TEXT');
+            var data = generateMessage(event.data, 'TEXT');
             $scope.messageDetils.push(data);
             $timeout(function () {
               viewScroll.scrollBottom();
@@ -90,6 +93,7 @@ angular.module('wechat.messageDetailController', [])
           setConnected(false);
         }
 
+        // 用户发送微信消息后，同时通过websocket发给服务器，服务器通过websocket给收信人推送一条消息，收信人的ws.onmessage事件回调函数将该消息自动显示在聊天界面最下方，
         var sendMessage = function(message) {
           if (ws != null) {
             log('sendMessage: ' + message);
@@ -275,7 +279,7 @@ angular.module('wechat.messageDetailController', [])
         };
         /* VOICE */
 
-        var markMessage = function(msg, type) {
+        var generateMessage = function(msg, type) {
           var data = {};
           data.content = msg;
           data.isFromeMe = true;
@@ -287,7 +291,7 @@ angular.module('wechat.messageDetailController', [])
         /* TEXT */
         $scope.sendText = function () {
           sendMessage($scope.msg);
-          var data = markMessage($scope.msg, 'TEXT');
+          var data = generateMessage($scope.msg, 'TEXT');
           $scope.messageDetils.push(data);
           messageService.sendText($scope.message.openid, $scope.msg);
           $scope.msg = '';
@@ -300,6 +304,7 @@ angular.module('wechat.messageDetailController', [])
         };
         /* TEXT */
 
+        // 点击“加号”展开其他功能菜单
         $scope.show = function () {
           // Show the action sheet
           var hideSheet = $ionicActionSheet.show({
