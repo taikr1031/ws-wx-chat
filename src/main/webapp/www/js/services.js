@@ -162,15 +162,27 @@ angular.module('wechat.services', [])
             }
           }
         },
-        setFriendSessionInfo: function(ownOpenId) {
-          var url = 'http://' + IP + ':' + PORT + '/loginSession/' + ownOpenId;
+
+        getAllUser: function() {
+          var result = [];
+          var url = 'http://' + IP + ':' + PORT + '/user/getAllUser.json';
+          return $http.get(url).then(function(response) {
+            console.log('length: ' + response.data);
+            return response.data;
+          });
+          //console.log('-=-= ' + result);
+          //return result;
+        },
+
+        setFriendSessionInfo: function(name, ownOpenId) {
+          var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + ownOpenId;
           console.log('setFriendSessionInfo: ' + url);
           $http.get(url).then(function(response) {
-            console.log(ownOpenId + ' setFriendSessionInfo success!');
+            console.log(response.data.name + '-=' + response.data.openid + ' setFriendSessionInfo success!');
           });
         },
         isLoginSession: function(ownOpenId) {
-          var url = 'http://' + IP + ':' + PORT + '/isLoginSession/' + ownOpenId;
+          var url = 'http://' + IP + ':' + PORT + '/login/isLoginSession/' + ownOpenId;
           console.log('setFriendSessionInfo: ' + url);
           $http.get(url).then(function(response) {
             if(response.data == false) {

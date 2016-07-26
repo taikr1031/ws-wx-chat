@@ -3,7 +3,7 @@ package com.zm.repository;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.zm.model.User;
+import com.zm.model.user.User;
 import org.springframework.stereotype.Service;
 
 @Service("participantRepository")

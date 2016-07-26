@@ -1,6 +1,6 @@
 package com.zm.interceptor;
 
-import com.zm.model.User;
+import com.zm.model.user.User;
 import com.zm.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +27,9 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 	if (request instanceof ServletServerHttpRequest) {
 	  ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
 	  HttpSession session = servletRequest.getServletRequest().getSession(false);
-	  if (session != null) {
+	  if (session != null && session.getAttribute(Constants.SESSION_USERNAME) != null) {
 		//使用userName区分WebSocketHandler，以便定向发送消息
-		String userName = ((User) session.getAttribute(Constants.SESSION_USERNAME)).getUsername();
+		String userName = ((User) session.getAttribute(Constants.SESSION_USERNAME)).getName();
 		attributes.put(Constants.WEBSOCKET_USERNAME, userName);
 	  }
 	}

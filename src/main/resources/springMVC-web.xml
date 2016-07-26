@@ -30,15 +30,44 @@
     </property>
   </bean>
 
-  <context:component-scan base-package="com.zm"/>
+  <context:component-scan base-package="com.zm.**"/>
   <context:component-scan base-package="org.springframework.messaging"/>
 
-  <!-- 对模型视图名称的解析 -->
-  <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-    <property name="prefix" value="/jsp/"/>
-    <property name="suffix" value=".jsp"/>
+  <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+    <property name="mediaTypes">
+      <value>
+        html=text/html
+        json=application/json
+      </value>
+    </property>
+    <property name="defaultContentType" value="text/html"/>
   </bean>
+
+  <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <property name="order" value="0"/>
+    <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+    <property name="viewResolvers">
+      <list>
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+          <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+          <property name="prefix" value="/jsp/"/>
+          <property name="suffix" value=".jsp"/>
+        </bean>
+      </list>
+    </property>
+    <property name="defaultViews">
+      <list>
+        <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+      </list>
+    </property>
+  </bean>
+
+  <!-- 对模型视图名称的解析 -->
+  <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+    <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+    <!--<property name="prefix" value="/jsp/"/>-->
+    <!--<property name="suffix" value=".jsp"/>-->
+  <!--</bean>-->
 
   <mvc:resources location="/static/js/" mapping="/js/**"/>
   <mvc:resources location="/static/css/" mapping="/css/**"/>

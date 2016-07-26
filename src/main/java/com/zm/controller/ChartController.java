@@ -1,6 +1,6 @@
 package com.zm.controller;
 
-import com.zm.model.User;
+import com.zm.model.user.User;
 import com.zm.repository.ParticipantRepository;
 import com.zm.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ChartController {
 	  throw new AccessDeniedException("login please");
 	}
 	User user = (User) request.getSession().getAttribute(Constants.SESSION_USERNAME);
-	model.addAttribute("participant.username", user.getUsername());
+	model.addAttribute("participant.username", user.getName());
 	return "chart";
   }
 

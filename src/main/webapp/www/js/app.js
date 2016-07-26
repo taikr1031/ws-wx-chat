@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var IP = '192.168.1.6';
+var IP = '10.68.19.114';
 var PORT = '8080';
 var OWN_OPEN_ID = 'oMPxav8gQa7VgRFjILtzRX_lhymE';
 
