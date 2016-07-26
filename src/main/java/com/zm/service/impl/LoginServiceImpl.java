@@ -15,12 +15,12 @@ import java.util.List;
 public class LoginServiceImpl extends GenericMongoServiceImpl<User> implements LoginService {
 
   @Override
-  public User login(String username, String openid) {
-	if (username.isEmpty() || openid.isEmpty()) {
+  public User login(String username, String password) {
+	if (username.isEmpty() || password.isEmpty()) {
 	  return new User();
 	}
 	Query query = new Query();
-	query.addCriteria(Criteria.where("name").is(username).and("openid").is(openid));
+	query.addCriteria(Criteria.where("name").is(username).and("password").is(password));
 	query.with(new Sort(new Sort.Order(Direction.DESC, "time")).and(new Sort(Direction.DESC, "openid")));
 	List<User> users = getMongoTemplate().find(query, User.class);
 	if (users != null && users.size() > 0) {

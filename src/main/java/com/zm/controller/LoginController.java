@@ -26,12 +26,13 @@ public class LoginController {
   private static final String LOGIN = "/app/chat.login";
   private static final String LOGOUT = "/app/chat.logout";
 
-  @RequestMapping("/login/{username}/{openid}")
-  public void loginSession(@PathVariable("username") String username, @PathVariable("openid") String openid, HttpServletRequest httpRequest) throws ServletException {
-	User user = loginService.login(username, openid);
-	user.setTime(new Date());
-	httpRequest.getSession().setAttribute(Constants.SESSION_USERNAME, user);
-	participantRepository.add(openid, user);
+  @RequestMapping("/login/{username}/{password}")
+  public void loginSession(@PathVariable("username") String username, @PathVariable("password") String password, HttpServletRequest httpRequest) throws ServletException {
+	User user = loginService.login(username, password);
+	if(user.getName() != null) {
+	  httpRequest.getSession().setAttribute(Constants.SESSION_USERNAME, user);
+	  participantRepository.add(user.getOpenid(), user);
+	}
   }
 
   @RequestMapping("/isLogin/{openid}")
