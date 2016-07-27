@@ -1,0 +1,48 @@
+{
+    "_id" : "1",
+    "_class" : "com.zm.model.user.User",
+    "name" : "zhagnsan",
+    "password" : "123456",
+    "openid" : "oMPxav8gQa7VgRFjILtzRX_lhymE",
+    "gender" : "男",
+    "email" : "78300748@qq.com",
+    "phone" : "18627909254",
+    "cell" : "18627909254",
+    "time" : ISODate("2016-07-26T03:38:37.757Z"),
+    "location" : {
+        "street" : "宝丰路",
+        "city" : "武汉",
+        "state" : "中国",
+        "zip" : 430064
+    },
+    "picture" : {
+        "large" : "",
+        "medium" : "",
+        "thumbnail" : "/www/img/ben.png"
+    }
+}
+
+
+{
+    "_id" : "2",
+    "_class" : "com.zm.model.user.User",
+    "name" : "lisi",
+    "password" : "123456",
+    "openid" : "111",
+    "gender" : "女",
+    "email" : "222@qq.com",
+    "phone" : "222",
+    "cell" : "222",
+    "time" : ISODate("2016-07-26T08:36:50.160Z"),
+    "location" : {
+        "street" : "宝丰路",
+        "city" : "武汉",
+        "state" : "中国",
+        "zip" : 430064
+    },
+    "picture" : {
+        "large" : "/www/img/perry.png",
+        "medium" : "/www/img/perry.png",
+        "thumbnail" : "/www/img/perry.png"
+    }
+}
