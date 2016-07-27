@@ -13,8 +13,8 @@ angular.module('wechat.settingController', [])
         //  $state.go('/tab/message');
         //}
       });
-      $scope.loginChat = function (name, openid) {
-        messageService.setFriendSessionInfo(name, openid);
+      $scope.loginChat = function (name, password) {
+        messageService.setFriendSessionInfo(name, password);
         $state.go('tab.message');
       }
     });

@@ -174,8 +174,8 @@ angular.module('wechat.services', [])
           //return result;
         },
 
-        setFriendSessionInfo: function(name, openid) {
-          var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + openid;
+        setFriendSessionInfo: function(name, password) {
+          var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + password;
           console.log('setFriendSessionInfo: ' + url);
           $http.get(url).then(function(response) {
             console.log(response.data.name + '-=' + response.data.openid + ' setFriendSessionInfo success!');
