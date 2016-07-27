@@ -18,12 +18,12 @@ angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.messageControll
     }])
 
     .run(function ($ionicPlatform, $http, messageService, dateService) {
-      var url = "";
+      var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';
       if (ionic.Platform.isAndroid()) {
         url = "/android_asset/www/";
       }
 
-      $http.get(url + "data/json/messages.json").then(function (response) {
+      $http.get(url).then(function (response) {
         // localStorageService.update("messages", response.data.messages);
         messageService.init(response.data.messages);
       });

@@ -3,6 +3,15 @@ angular.module('wechat.messageController', [])
     .controller('messageCtrl', function ($scope, $state, $ionicPopup, localStorageService, messageService) {
       // $scope.messages = messageService.getAllMessages();
       // console.log($scope.messages);
+      $scope.$on("$ionicView.beforeEnter", function () {
+        // console.log($scope.messages);
+        //messageService.setFriendSessionInfo(OWN_OPEN_ID);
+        $scope.messages = messageService.getAllMessages();
+        $scope.popup = {
+          isPopup: false,
+          index: 0
+        };
+      });
       $scope.onSwipeLeft = function () {
         $state.go("tab.friends");
       };
@@ -57,13 +66,4 @@ angular.module('wechat.messageController', [])
           "messageId": message.id
         });
       };
-      $scope.$on("$ionicView.beforeEnter", function () {
-        // console.log($scope.messages);
-        //messageService.setFriendSessionInfo(OWN_OPEN_ID);
-        $scope.messages = messageService.getAllMessages();
-        $scope.popup = {
-          isPopup: false,
-          index: 0
-        };
-      });
     })

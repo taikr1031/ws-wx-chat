@@ -136,6 +136,7 @@ angular.module('wechat.services', [])
     function ($http, localStorageService, dateService) {
       return {
         init: function (messages) {
+          console.log(messages);
           var i = 0;
           var length = 0;
           var messageID = new Array();
@@ -164,17 +165,14 @@ angular.module('wechat.services', [])
         },
 
         getAllUser: function() {
-          var result = [];
           var url = 'http://' + IP + ':' + PORT + '/user/getAllUser.json';
           return $http.get(url).then(function(response) {
-            console.log('length: ' + response.data);
+            //console.log('length: ' + response.data);
             return response.data;
           });
-          //console.log('-=-= ' + result);
-          //return result;
         },
 
-        setFriendSessionInfo: function(name, password) {
+        loginChat: function(name, password) {
           var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + password;
           console.log('setFriendSessionInfo: ' + url);
           $http.get(url).then(function(response) {

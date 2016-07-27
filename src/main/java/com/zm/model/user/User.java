@@ -1,19 +1,15 @@
 package com.zm.model.user;
 
-import org.springframework.data.annotation.Id;
+import com.zm.model.GenericObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Document
-public class User implements Serializable {
-
-  @Id
-  private String id;
-  private String name;
+public class User extends GenericObject {
+  
   private String password;
-  private String openid;
+  private String code; // openid
   private String gender;
   private String email;
   private String phone;
@@ -28,24 +24,7 @@ public class User implements Serializable {
   }
 
   public User(String name) {
-	this.name = name;
 	time = new Date();
-  }
-
-  public String getId() {
-	return id;
-  }
-
-  public void setId(String id) {
-	this.id = id;
-  }
-
-  public String getName() {
-	return name;
-  }
-
-  public void setName(String name) {
-	this.name = name;
   }
 
   public String getPassword() {
@@ -56,12 +35,12 @@ public class User implements Serializable {
 	this.password = password;
   }
 
-  public String getOpenid() {
-	return openid;
+  public String getCode() {
+	return code;
   }
 
-  public void setOpenid(String openid) {
-	this.openid = openid;
+  public void setCode(String code) {
+	this.code = code;
   }
 
   public Date getTime() {

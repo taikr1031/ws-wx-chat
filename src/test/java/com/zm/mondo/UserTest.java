@@ -17,10 +17,10 @@ public class UserTest {
 	GenericMongoService mongoService = (GenericMongoServiceImpl)context.getBean("genericMongoService");
 
 	User user = new User();
-	user.setId("2");
-	user.setName("张三");
+	user.setId("7");
+	user.setName("lisi");
 	user.setPassword("123456");
-	user.setOpenid("111");
+	user.setCode("111");
 	user.setPhone("222");
 	user.setCell("222");
 	user.setEmail("222@qq.com");
