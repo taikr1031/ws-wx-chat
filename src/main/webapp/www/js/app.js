@@ -25,7 +25,7 @@ angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.messageControll
 
       $http.get(url).then(function (response) {
         // localStorageService.update("messages", response.data.messages);
-        messageService.init(response.data.messages);
+        messageService.init(response.data.chatList);
       });
       $http.get(url + "data/json/friends.json").then(function (response) {
         console.log(response.data.results);

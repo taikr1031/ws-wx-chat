@@ -41,7 +41,7 @@ angular.module('wechat.services', [])
     };
   }])
 
-  .factory('dateService', [function () {
+  .factory('dateService', ['$filter', function ($filter) {
     return {
       handleMessageDate: function (messages) {
         var i = 0,
@@ -110,7 +110,9 @@ angular.module('wechat.services', [])
         var reg = /(^\d{4})-(\d{1,2})-(\d{1,2})\s(\d{1,2}):(\d{1,2}):(\d{1,2})/g;
         var result = new Array();
         if (message) {
-          messageTime = message.lastMessage.originalTime;
+          //messageTime = message.originalTime;
+          messageTime = $filter("date")(message.originalTime, "yyyy-MM-dd HH:mm:ss");
+
           result = reg.exec(messageTime);
           if (!result) {
             console.log("result is null");
@@ -174,9 +176,9 @@ angular.module('wechat.services', [])
 
         loginChat: function(name, password) {
           var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + password;
-          console.log('setFriendSessionInfo: ' + url);
+          console.log('loginChat URL: ' + url);
           $http.get(url).then(function(response) {
-            console.log(response.data.name + '-=' + response.data.openid + ' setFriendSessionInfo success!');
+            console.log(response.data.name + '-=' + response.data.openid + ' loginChat success!');
           });
         },
         isLoginSession: function(ownOpenId) {

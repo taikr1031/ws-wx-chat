@@ -5,6 +5,7 @@ angular.module('wechat.settingController', [])
         var data = messageService.getAllUser();
         $timeout(function() {
           //console.log(data.$$state.value.userList[0].name);
+          console.log(data);
           $scope.friends = data;
         }, 0);
 

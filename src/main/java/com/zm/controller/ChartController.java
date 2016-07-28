@@ -28,7 +28,8 @@ public class ChartController {
   public List<Chat> queryChat(HttpServletRequest request) {
 	List<Chat> chats = null;
 	try {
-	  chats = chatService.getAllObjects();
+	  User user = (User) request.getSession().getAttribute(Constants.SESSION_USERNAME);
+	  chats = chatService.queryAllChatByUserCode(user.getCode());
 //	  User loginUser = (User) request.getSession().getAttribute(Constants.SESSION_USERNAME);
 //	  if (loginUser != null) {
 //		String ownCode = loginUser.getCode();

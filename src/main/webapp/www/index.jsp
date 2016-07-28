@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -21,6 +22,7 @@
   <script src="/www/js/services.js"></script>
   <script src="/www/js/directives.js"></script>
   <script src="/www/js/elastic.js"></script>
+  <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 </head>
 
 <body ng-app="wechat">
