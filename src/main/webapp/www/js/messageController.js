@@ -61,7 +61,8 @@ angular.module('wechat.messageController', [])
         $scope.popup.isPopup = false;
         messageService.updateMessage(message);
       };
-      $scope.messageDetils = function (message) {
+      $scope.messageDetails = function (message) {
+        console.log(message.id);
         $state.go("messageDetail", {
           "messageId": message.id
         });

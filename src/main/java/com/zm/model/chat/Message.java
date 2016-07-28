@@ -9,6 +9,8 @@ public class Message extends GenericObject {
   private boolean fromeMe;
   private String content;
   private String pic;
+  private String type;
+  private String mediaId;
   private Timestamp time;
 
   public boolean isFromeMe() {
@@ -41,5 +43,21 @@ public class Message extends GenericObject {
 
   public void setPic(String pic) {
 	this.pic = pic;
+  }
+
+  public String getType() {
+	return type;
+  }
+
+  public void setType(String type) {
+	this.type = type;
+  }
+
+  public String getMediaId() {
+	return mediaId;
+  }
+
+  public void setMediaId(String mediaId) {
+	this.mediaId = mediaId;
   }
 }

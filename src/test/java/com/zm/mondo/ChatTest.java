@@ -45,8 +45,10 @@ public class ChatTest {
 
 	Message msg1 = new Message();
 	msg1.setId("m" + own);
-	msg1.setContent("/www/img/" + own + ".png");
-	msg1.setPic("pic" + own);
+	msg1.setContent("content" + own);
+	msg1.setPic("/www/img/" + own + ".png");
+	msg1.setType("TEXT");
+	msg1.setMediaId("mdeia" + own);
 	msg1.setFromeMe(true);
 	chat.addMessage(msg1);
 
@@ -54,6 +56,8 @@ public class ChatTest {
 	msg2.setId("m" + friend);
 	msg2.setContent("content" + friend);
 	msg2.setPic("/www/img/" + friend + ".png");
+	msg1.setType("TEXT");
+	msg1.setMediaId("mdeia" + friend);
 	msg2.setFromeMe(false);
 	chat.setLastMessage(msg2);
 	chat.addMessage(msg2);
