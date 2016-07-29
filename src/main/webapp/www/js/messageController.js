@@ -274,7 +274,11 @@ angular.module('wechat.messageController', [])
 
         var generateMessage = function(msg, type) {
           var data = {};
-          data.content = msg;
+          if(msg.indexOf('___') != -1) {
+            data.content = msg.split('___')[0];
+          } else {
+            data.content = msg;
+          }
           data.fromeMe = true;
           data.time = new Date();
           data.type = type;
