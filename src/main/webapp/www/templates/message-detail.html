@@ -3,7 +3,6 @@
     <button class="button button-icon icon ion-arrow-left-c" ui-sref="tab.message">
     </button>
   </div>
-  <!-- <div class="h1 title" ng-bind="message.name">微信</div> -->
   <div class="h1 title" ng-bind="message.name"></div>
   <div class="buttons">
     <button class="button button-icon icon ion-person"></button>
@@ -16,10 +15,10 @@
     <div class="rj-message-wrap" ng-if="!item.fromeMe">
       <img ng-src="{{item.pic}}" class="rj-head-pic">
       <span class="rj-triangle-left"></span>
-      <p class="rj-message" ng-bind="item.content">-=</p>
+      <p class="rj-message" ng-bind="item.content"></p>
     </div>
     <div class="rj-message-wrap" ng-if="item.fromeMe">
-      <img ng-src="{{item.pic}}" class="rj-head-pic">
+      <img ng-src="{{item.pic}}" class="rj-head-pic-right">
       <span class="rj-triangle-right"></span>
       <p class="rj-message-right" ng-bind="item.content" ng-if="item.type == 'TEXT'"></p>
       <p class="rj-message-right button item-icon-left ion-play button-positive" ng-bind="item.content" ng-click="palyAudio(item.mediaId)" ng-if="item.type == 'VOICE'"></p>
