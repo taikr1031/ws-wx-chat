@@ -80,7 +80,7 @@ angular.module('wechat.messageController', [])
             log('Info: connection closed.');
             log(event);
           };
-        }
+        };
 
         var disconnect = function() {
           if (ws != null) {
@@ -88,7 +88,7 @@ angular.module('wechat.messageController', [])
             ws = null;
           }
           setConnected(false);
-        }
+        };
 
         // 用户发送微信消息后，同时通过websocket发给服务器，服务器通过websocket给收信人推送一条消息，收信人的ws.onmessage事件回调函数将该消息自动显示在聊天界面最下方，
         var sendMessage = function(message) {
@@ -98,14 +98,14 @@ angular.module('wechat.messageController', [])
           } else {
             alert('connection not established, please connect.');
           }
-        }
+        };
 
         var log = function(message) {
           console.log(message);
-        }
+        };
 
         var setConnected = function(connected) {
-        }
+        };
 
         /* LOCATION*/
         var location = {
@@ -283,7 +283,7 @@ angular.module('wechat.messageController', [])
 
         /* TEXT */
         $scope.sendText = function () {
-          sendMessage($scope.msg);
+          sendMessage($scope.msg + '___' + $scope.chat.friendCode);
           var data = generateMessage($scope.msg, 'TEXT');
           $scope.messages.push(data);
           messageService.sendText($scope.chat.friendCode, $scope.msg);

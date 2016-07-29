@@ -22,9 +22,11 @@ public class UserTest extends GenericMongoServiceImpl<User>{
   public static void main(String[] args) {
 //	dropCollection(mongoService);
 	createUser(mongoService, "1", "男", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE");
-	createUser(mongoService, "2", "女", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA");
-	createUser(mongoService, "3", "男", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc");
-	createUser(mongoService, "4", "男", "WY", "code4");
+//	createUser(mongoService, "2", "女", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA");
+	createUser(mongoService, "2", "女", "YJ", "CODE2");
+//	createUser(mongoService, "3", "男", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc");
+	createUser(mongoService, "3", "男", "LJ", "CODE3");
+	createUser(mongoService, "4", "女", "ZZL", "oMPxav7E8tYZADIRz58AEcez-RAo");
   }
 
   private static void createUser(GenericMongoService mongoService, String own, String sex, String name, String code) {

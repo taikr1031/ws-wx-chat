@@ -17,18 +17,31 @@ public class ChatTest {
 	GenericMongoService mongoService = (GenericMongoServiceImpl) context.getBean("genericMongoService");
 
 	try {
-	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", 22);
+	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "2", "YJ", "CODE2", 22);
 	  Thread.sleep(1000);
-	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "3", "LJ", "CODE3", 33);
 	  Thread.sleep(1000);
-	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "4", "WY", "code4", 44);
+	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "4", "ZZL", "oMPxav7E8tYZADIRz58AEcez-RAo", 44);
 	  Thread.sleep(1000);
 
-	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
+	  createChat(mongoService, "4", "ZZL", "oMPxav7E8tYZADIRz58AEcez-RAo", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
 	  Thread.sleep(1000);
-	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+	  createChat(mongoService, "4", "ZZL", "oMPxav7E8tYZADIRz58AEcez-RAo", "3", "LJ", "CODE3", 33);
 	  Thread.sleep(1000);
-	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "4", "WY", "code4", 44);
+	  createChat(mongoService, "4", "ZZL", "oMPxav7E8tYZADIRz58AEcez-RAo", "2", "YJ", "CODE2", 44);
+
+//	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", 22);
+//	  Thread.sleep(1000);
+//	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+//	  Thread.sleep(1000);
+//	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "4", "WY", "code4", 44);
+//	  Thread.sleep(1000);
+//
+//	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
+//	  Thread.sleep(1000);
+//	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+//	  Thread.sleep(1000);
+//	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "4", "WY", "code4", 44);
 	} catch (InterruptedException e) {
 	  e.printStackTrace();
 	}

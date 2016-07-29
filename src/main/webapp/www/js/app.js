@@ -1,4 +1,4 @@
-var IP = '10.68.19.114';
+var IP = '192.168.1.8';
 var PORT = '8080';
 var OWN_OPEN_ID = 'oMPxav8gQa7VgRFjILtzRX_lhymE';
 
@@ -22,9 +22,9 @@ angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.chatController'
         // localStorageService.update("messages", response.data.messages);
         messageService.init(response.data.chatList);
       });
-      $http.get(url + "data/json/friends.json").then(function (response) {
-        console.log(response.data.results);
-      });
+      //$http.get(url + "data/json/friends.json").then(function (response) {
+      //  console.log(response.data.results);
+      //});
       $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
           cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

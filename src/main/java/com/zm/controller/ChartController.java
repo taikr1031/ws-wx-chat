@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class ChartController {
 	List<Chat> chats = null;
 	try {
 	  User user = (User) request.getSession().getAttribute(Constants.SESSION_USERNAME);
+	  if (user == null) {
+		return new ArrayList<Chat>();
+	  }
 	  chats = chatService.queryAllChatByUserCode(user.getCode());
 	} catch (Exception e) {
 	  e.printStackTrace();

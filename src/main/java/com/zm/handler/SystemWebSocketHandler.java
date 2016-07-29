@@ -41,7 +41,8 @@ public class SystemWebSocketHandler implements WebSocketHandler {
   @Override
   public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 	logger.debug("websocket sendMessage: " + message);
-	sendMessageToUser((String) session.getAttributes().get("WEBSOCKET_USERNAME"),(TextMessage) message);
+	String friendCode = message.getPayload().toString().split("___")[1];
+	sendMessageToUser(friendCode, (TextMessage) message);
   }
 
   @Override
@@ -83,13 +84,10 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 
   /**
    * 给某个用户发送消息
-   *
-   * @param userName
-   * @param message
    */
-  public void sendMessageToUser(String userName, TextMessage message) {
+  public void sendMessageToUser(String code, TextMessage message) {
 	for (WebSocketSession user : users) {
-	  if (user.getAttributes().get(Constants.WEBSOCKET_USERNAME).equals(userName)) {
+	  if (user.getAttributes().get(Constants.WEBSOCKET_USERNAME).equals(code)) {
 		try {
 		  if (user.isOpen()) {
 			user.sendMessage(message);
