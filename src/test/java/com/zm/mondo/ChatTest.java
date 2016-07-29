@@ -24,11 +24,11 @@ public class ChatTest {
 	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "4", "WY", "code4", 44);
 	  Thread.sleep(1000);
 
-	  createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
+	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
 	  Thread.sleep(1000);
-	  createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
 	  Thread.sleep(1000);
-	  createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "4", "WY", "code4", 44);
+	  createChat(mongoService, "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", "4", "WY", "code4", 44);
 	} catch (InterruptedException e) {
 	  e.printStackTrace();
 	}

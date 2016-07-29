@@ -1,6 +1,6 @@
 <ion-header-bar align-title="left" class="bar-dark">
   <div class="buttons">
-    <button class="button button-icon icon ion-arrow-left-c" ui-sref="tab.message">
+    <button class="button button-icon icon ion-arrow-left-c" ui-sref="tab.chat">
     </button>
   </div>
   <div class="h1 title" ng-bind="message.name"></div>
@@ -10,7 +10,7 @@
 </ion-header-bar>
 <ion-content class="rj-stable-content" delegate-handle="messageDetailsScroll" id="message-detail-content">
   <ion-refresher pulling-text="..." on-refresh="doRefresh()" pulling-icon=""></ion-refresher>
-  <div ng-repeat="item in chatDetails">
+  <div ng-repeat="item in messages">
     <p class="rj-message-time" ng-bind="item.time" ng-if="false"></p>
     <div class="rj-message-wrap" ng-if="!item.fromeMe">
       <img ng-src="{{item.pic}}" class="rj-head-pic">

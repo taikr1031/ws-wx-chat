@@ -15,8 +15,8 @@
   <!-- your app's js -->
   <script src="/www/js/app.js"></script>
   <script src="/www/js/controllers.js"></script>
+  <script src="/www/js/chatController.js"></script>
   <script src="/www/js/messageController.js"></script>
-  <script src="/www/js/messageDetailController.js"></script>
   <script src="/www/js/settingController.js"></script>
   <script src="/www/js/routes.js"></script>
   <script src="/www/js/services.js"></script>

@@ -2,8 +2,8 @@ var IP = '10.68.19.114';
 var PORT = '8080';
 var OWN_OPEN_ID = 'oMPxav8gQa7VgRFjILtzRX_lhymE';
 
-angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.messageController',
-      'wechat.messageDetailController', 'wechat.settingController', 'wechat.routes',
+angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.chatController',
+      'wechat.messageController', 'wechat.settingController', 'wechat.routes',
       'wechat.services', 'wechat.directives', 'monospaced.elastic'
     ])
 

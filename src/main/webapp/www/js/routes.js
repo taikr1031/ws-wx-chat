@@ -8,19 +8,19 @@ angular.module('wechat.routes', [])
             abstract: true,
             templateUrl: "templates/tabs.html",
           })
-          .state('tab.message', {
-            url: '/message',
+          .state('tab.chat', {
+            url: '/chat',
             views: {
-              'tab-message': {
-                templateUrl: 'templates/tab-message.html',
-                controller: "messageCtrl"
+              'tab-chat': {
+                templateUrl: 'templates/tab-chat.html',
+                controller: "chatCtrl"
               }
             }
           })
-          .state('messageDetail', {
-            url: '/messageDetail/:messageId',
-            templateUrl: "templates/message-detail.html",
-            controller: "messageDetailCtrl"
+          .state('message', {
+            url: '/message/:chatId',
+            templateUrl: "templates/message.html",
+            controller: "messageCtrl"
           })
           .state('tab.friends', {
             url: '/friends',

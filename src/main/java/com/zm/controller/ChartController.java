@@ -30,11 +30,6 @@ public class ChartController {
 	try {
 	  User user = (User) request.getSession().getAttribute(Constants.SESSION_USERNAME);
 	  chats = chatService.queryAllChatByUserCode(user.getCode());
-//	  User loginUser = (User) request.getSession().getAttribute(Constants.SESSION_USERNAME);
-//	  if (loginUser != null) {
-//		String ownCode = loginUser.getCode();
-//		chats = chatService.queryAllChatWithoutOwn(ownCode);
-//	  }
 	} catch (Exception e) {
 	  e.printStackTrace();
 	}
