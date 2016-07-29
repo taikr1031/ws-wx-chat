@@ -10,24 +10,29 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Timestamp;
 
-public class UserTest {
+public class UserTest extends GenericMongoServiceImpl<User>{
 
-  public static void main(String[] args) {
+  private static GenericMongoService mongoService;
+
+  static {
 	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"classpath:/spring-mongodb-test.xml"});
-	GenericMongoService mongoService = (GenericMongoServiceImpl) context.getBean("genericMongoService");
-
-	createUser(mongoService, "1");
-	createUser(mongoService, "2");
-	createUser(mongoService, "3");
-	createUser(mongoService, "4");
+	mongoService = (GenericMongoServiceImpl) context.getBean("genericMongoService");
   }
 
-  private static void createUser(GenericMongoService mongoService, String own) {
+  public static void main(String[] args) {
+//	dropCollection(mongoService);
+	createUser(mongoService, "1", "男", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE");
+	createUser(mongoService, "2", "女", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA");
+	createUser(mongoService, "3", "男", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc");
+	createUser(mongoService, "4", "男", "WY", "code4");
+  }
+
+  private static void createUser(GenericMongoService mongoService, String own, String sex, String name, String code) {
 	User user = new User();
 	user.setId(own);
-	user.setName("name" + own);
+	user.setName(name);
 	user.setPassword("password" + own);
-	user.setCode("code" + own);
+	user.setCode(code);
 	user.setPhone("phone" + own);
 	user.setCell("cell" + own);
 	user.setEmail(own + "@qq.com");
@@ -46,5 +51,13 @@ public class UserTest {
 	user.setPicture(picture);
 
 	mongoService.saveObject(user);
+  }
+
+  public static void dropCollection(GenericMongoService mongoService) {
+	mongoService.deleteObject("1");
+	mongoService.deleteObject("2");
+	mongoService.deleteObject("3");
+	mongoService.deleteObject("4");
+	mongoService.dropCollection();
   }
 }

@@ -2,15 +2,11 @@ package com.zm.mondo;
 
 import com.zm.model.chat.Chat;
 import com.zm.model.chat.Message;
-import com.zm.model.user.Location;
-import com.zm.model.user.Picture;
-import com.zm.model.user.User;
 import com.zm.mongo.core.GenericMongoService;
 import com.zm.mongo.core.GenericMongoServiceImpl;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class ChatTest {
@@ -19,26 +15,26 @@ public class ChatTest {
 	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"classpath:/spring-mongodb-test.xml"});
 	GenericMongoService mongoService = (GenericMongoServiceImpl) context.getBean("genericMongoService");
 
-	createChat(mongoService, "1", "2", 1);
-	createChat(mongoService, "1", "3", 2);
-	createChat(mongoService, "1", "4", 3);
+	createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", 22);
+	createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+	createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "4", "WY", "code4", 44);
 
-	createChat(mongoService, "2", "1", 1);
-	createChat(mongoService, "2", "3", 2);
-	createChat(mongoService, "2", "4", 3);
+	createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
+	createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+	createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "4", "WY", "code4", 44);
   }
 
-  private static void createChat(GenericMongoService mongoService, String own, String friend, int num) {
+  private static void createChat(GenericMongoService mongoService, String own, String ownName, String ownCode, String friend, String friendName, String friendCode, int num) {
 	Chat chat = new Chat();
 	chat.setId(own + "-" + friend);
 	chat.setOwnId("id" + own);
 	chat.setOwnPic("/www/img/" + own + ".png");
-	chat.setOwnCode("code" + own);
-	chat.setOwnName("name" + own);
+	chat.setOwnCode(ownCode);
+	chat.setOwnName(ownName);
 	chat.setFriendId("id" + friend);
 	chat.setFriendPic("/www/img/" + friend + ".png");
-	chat.setFriendCode("code" + friend);
-	chat.setFriendName("name" + friend);
+	chat.setFriendCode(friendCode);
+	chat.setFriendName(friendName);
 	chat.setNoReadMessages(num);
 	chat.setShowHints(false);
 	chat.setOriginalTime(new Timestamp(System.currentTimeMillis()));

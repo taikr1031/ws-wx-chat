@@ -286,18 +286,17 @@ angular.module('wechat.messageDetailController', [])
           data.time = new Date();
           data.type = type;
           return data;
-        }
+        };
 
         /* TEXT */
         $scope.sendText = function () {
           sendMessage($scope.msg);
           var data = generateMessage($scope.msg, 'TEXT');
           $scope.messageDetails.push(data);
-          messageService.sendText($scope.message.openid, $scope.msg);
+          messageService.sendText($scope.message.friendCode, $scope.msg);
           $scope.msg = '';
           viewScroll.scrollBottom();
         };
-
 
         $scope.toggleInput = function (isInputText) {
           $scope.isInputText = !isInputText;
