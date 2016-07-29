@@ -36,7 +36,7 @@ angular.module('wechat.messageDetailController', [])
           // console.log("ok");
           $scope.messageNum += 5;
           $timeout(function () {
-            $scope.messageDetails = messageService.getAmountMessageById($scope.messageNum,
+            $scope.chatDetails = messageService.getAmountMessageById($scope.messageNum,
                 $stateParams.messageId);
             $scope.$broadcast('scroll.refreshComplete');
           }, 200);
@@ -44,12 +44,12 @@ angular.module('wechat.messageDetailController', [])
 
         // 页面载入事件
         $scope.$on("$ionicView.beforeEnter", function () {
-          $scope.message = messageService.getMessageById($stateParams.messageId);
+          $scope.message = messageService.getChatById($stateParams.messageId);
           $scope.message.noReadMessages = 0;
           $scope.message.showHints = false;
-          messageService.updateMessage($scope.message);
+          messageService.updateChat($scope.message);
           $scope.messageNum = 10;
-          $scope.messageDetails = messageService.getAmountMessageById($scope.messageNum, $stateParams.messageId);
+          $scope.chatDetails = messageService.getAmountMessageById($scope.messageNum, $stateParams.messageId);
           $timeout(function () {
             viewScroll.scrollBottom();
           }, 0);
@@ -73,7 +73,7 @@ angular.module('wechat.messageDetailController', [])
           ws.onmessage = function (event) {
             log('Received: ' + event.data);
             var data = generateMessage(event.data, 'TEXT');
-            $scope.messageDetails.push(data);
+            $scope.chatDetails.push(data);
             $timeout(function () {
               viewScroll.scrollBottom();
             }, 0);
@@ -237,7 +237,7 @@ angular.module('wechat.messageDetailController', [])
           data.time = new Date();
           data.type = 'IMAGE';
           data.mediaId = serverId;
-          $scope.messageDetails.push(data);
+          $scope.chatDetails.push(data);
           $scope.msg = '';
           $timeout(function() {
             document.getElementById(downloadId).src = downloadId;
@@ -272,7 +272,7 @@ angular.module('wechat.messageDetailController', [])
           data.time = new Date();
           data.type = 'VOICE';
           data.mediaId = mediaId;
-          $scope.messageDetails.push(data);
+          $scope.chatDetails.push(data);
           messageService.sendVoice($scope.message.openid, mediaId);
           $scope.msg = '';
           viewScroll.scrollBottom();
@@ -292,7 +292,7 @@ angular.module('wechat.messageDetailController', [])
         $scope.sendText = function () {
           sendMessage($scope.msg);
           var data = generateMessage($scope.msg, 'TEXT');
-          $scope.messageDetails.push(data);
+          $scope.chatDetails.push(data);
           messageService.sendText($scope.message.friendCode, $scope.msg);
           $scope.msg = '';
           viewScroll.scrollBottom();

@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class ChatTest {
 
@@ -15,13 +16,22 @@ public class ChatTest {
 	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"classpath:/spring-mongodb-test.xml"});
 	GenericMongoService mongoService = (GenericMongoServiceImpl) context.getBean("genericMongoService");
 
-	createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", 22);
-	createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
-	createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "4", "WY", "code4", 44);
+	try {
+	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "2", "YJ", "oMPxav6aC_TuPncPkgHhE998bboA", 22);
+	  Thread.sleep(1000);
+	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+	  Thread.sleep(1000);
+	  createChat(mongoService, "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", "4", "WY", "code4", 44);
+	  Thread.sleep(1000);
 
-	createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
-	createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
-	createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "4", "WY", "code4", 44);
+	  createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "1", "ZM", "oMPxav8gQa7VgRFjILtzRX_lhymE", 11);
+	  Thread.sleep(1000);
+	  createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "3", "LJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", 33);
+	  Thread.sleep(1000);
+	  createChat(mongoService, "2", "YJ", "oMPxav8EjT7cotajZ7_YSisGbFtc", "4", "WY", "code4", 44);
+	} catch (InterruptedException e) {
+	  e.printStackTrace();
+	}
   }
 
   private static void createChat(GenericMongoService mongoService, String own, String ownName, String ownCode, String friend, String friendName, String friendCode, int num) {
@@ -36,6 +46,7 @@ public class ChatTest {
 	chat.setFriendCode(friendCode);
 	chat.setFriendName(friendName);
 	chat.setNoReadMessages(num);
+	chat.setTimeFrome1970(new Date().getTime());
 	chat.setShowHints(false);
 	chat.setOriginalTime(new Timestamp(System.currentTimeMillis()));
 

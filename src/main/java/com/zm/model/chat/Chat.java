@@ -19,6 +19,7 @@ public class Chat extends GenericObject {
   private String friendCode;
   private String friendName;
   private int noReadMessages;
+  private long timeFrome1970;
   private Timestamp originalTime;
   private boolean top;
   private boolean showHints;
@@ -79,6 +80,14 @@ public class Chat extends GenericObject {
 
   public void setNoReadMessages(int noReadMessages) {
 	this.noReadMessages = noReadMessages;
+  }
+
+  public long getTimeFrome1970() {
+	return timeFrome1970;
+  }
+
+  public void setTimeFrome1970(long timeFrome1970) {
+	this.timeFrome1970 = timeFrome1970;
   }
 
   public boolean isTop() {

@@ -1,20 +1,4 @@
 angular.module('wechat.services', [])
-  /*
-  .factory("userService", function ($http) {
-    var users = [];
-    return {
-      getUsers: function () {
-        return $http.get("https://randomuser.me/api/?results=10").then(function (response) {
-          users = response.data.results;
-          return response.data.results;
-        });
-      },
-      getUser: function (index) {
-        return users[index];
-      }
-    };
-  })
-  */
 
     .factory('localStorageService', [function () {
     return {
@@ -43,50 +27,50 @@ angular.module('wechat.services', [])
 
   .factory('dateService', ['$filter', function ($filter) {
     return {
-      handleMessageDate: function (messages) {
+      handleChatDate: function (chats) {
         var i = 0,
             length = 0,
-            messageDate = {},
+            chatDate = {},
             nowDate = {},
             weekArray = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
             diffWeekValue = 0;
-        if (messages) {
+        if (chats) {
           nowDate = this.getNowDate();
-          length = messages.length;
+          length = chats.length;
           for (i = 0; i < length; i++) {
-            messageDate = this.getMessageDate(messages[i]);
-            if (!messageDate) {
+            chatDate = this.getChatDate(chats[i]);
+            if (!chatDate) {
               return null;
             }
-            if (nowDate.year - messageDate.year > 0) {
-              messages[i].lastMessage.time = messageDate.year + "";
+            if (nowDate.year - chatDate.year > 0) {
+              chats[i].lastMessage.time = chatDate.year + "";
               continue;
             }
-            if (nowDate.month - messageDate.month >= 0 ||
-                nowDate.day - messageDate.day > nowDate.week) {
-              messages[i].lastMessage.time = messageDate.month +
-                  "月" + messageDate.day + "日";
+            if (nowDate.month - chatDate.month >= 0 ||
+                nowDate.day - chatDate.day > nowDate.week) {
+              chats[i].lastMessage.time = chatDate.month +
+                  "月" + chatDate.day + "日";
               continue;
             }
-            if (nowDate.day - messageDate.day <= nowDate.week &&
-                nowDate.day - messageDate.day > 1) {
-              diffWeekValue = nowDate.week - (nowDate.day - messageDate.day);
-              messages[i].lastMessage.time = weekArray[diffWeekValue];
+            if (nowDate.day - chatDate.day <= nowDate.week &&
+                nowDate.day - chatDate.day > 1) {
+              diffWeekValue = nowDate.week - (nowDate.day - chatDate.day);
+              chats[i].lastMessage.time = weekArray[diffWeekValue];
               continue;
             }
-            if (nowDate.day - messageDate.day === 1) {
-              messages[i].lastMessage.time = "昨天";
+            if (nowDate.day - chatDate.day === 1) {
+              chats[i].lastMessage.time = "昨天";
               continue;
             }
-            if (nowDate.day - messageDate.day === 0) {
-              messages[i].lastMessage.time = messageDate.hour + ":" + messageDate.minute;
+            if (nowDate.day - chatDate.day === 0) {
+              chats[i].lastMessage.time = chatDate.hour + ":" + chatDate.minute;
               continue;
             }
           }
-          // console.log(messages);
-          // return messages;
+          // console.log(chats);
+          // return chats;
         } else {
-          console.log("messages is null");
+          console.log("chats is null");
           return null;
         }
 
@@ -103,31 +87,31 @@ angular.module('wechat.services', [])
         nowDate.second = date.getSeconds();
         return nowDate;
       },
-      getMessageDate: function (message) {
-        var messageDate = {};
-        var messageTime = "";
+      getChatDate: function (chat) {
+        var chatDate = {};
+        var chatTime = "";
         //2015-10-12 15:34:55
         var reg = /(^\d{4})-(\d{1,2})-(\d{1,2})\s(\d{1,2}):(\d{1,2}):(\d{1,2})/g;
         var result = new Array();
-        if (message) {
-          //messageTime = message.originalTime;
-          messageTime = $filter("date")(message.originalTime, "yyyy-MM-dd HH:mm:ss");
+        if (chat) {
+          //chatTime = chat.originalTime;
+          chatTime = $filter("date")(chat.originalTime, "yyyy-MM-dd HH:mm:ss");
 
-          result = reg.exec(messageTime);
+          result = reg.exec(chatTime);
           if (!result) {
             console.log("result is null");
             return null;
           }
-          messageDate.year = parseInt(result[1]);
-          messageDate.month = parseInt(result[2]);
-          messageDate.day = parseInt(result[3]);
-          messageDate.hour = parseInt(result[4]);
-          messageDate.minute = parseInt(result[5]);
-          messageDate.second = parseInt(result[6]);
-          // console.log(messageDate);
-          return messageDate;
+          chatDate.year = parseInt(result[1]);
+          chatDate.month = parseInt(result[2]);
+          chatDate.day = parseInt(result[3]);
+          chatDate.hour = parseInt(result[4]);
+          chatDate.minute = parseInt(result[5]);
+          chatDate.second = parseInt(result[6]);
+          // console.log(chatDate);
+          return chatDate;
         } else {
-          console.log("message is null");
+          console.log("chat is null");
           return null;
         }
       }
@@ -137,31 +121,30 @@ angular.module('wechat.services', [])
   .factory('messageService', ['$http', 'localStorageService', 'dateService',
     function ($http, localStorageService, dateService) {
       return {
-        init: function (messages) {
-          console.log(messages);
+        init: function (chats) {
           var i = 0;
           var length = 0;
-          var messageID = new Array();
+          var chatID = new Array();
           var date = null;
-          var messageDate = null;
-          if (messages) {
-            length = messages.length;
+          var chatDate = null;
+          if (chats) {
+            length = chats.length;
             for (; i < length; i++) {
-              messageDate = dateService.getMessageDate(messages[i]);
-              if (!messageDate) {
+              chatDate = dateService.getChatDate(chats[i]);
+              if (!chatDate) {
                 return null;
               }
-              date = new Date(messageDate.year, messageDate.month,
-                  messageDate.day, messageDate.hour, messageDate.minute,
-                  messageDate.second);
-              messages[i].lastMessage.timeFrome1970 = date.getTime();
-              messageID[i] = {
-                id: messages[i].id
+              date = new Date(chatDate.year, chatDate.month,
+                  chatDate.day, chatDate.hour, chatDate.minute,
+                  chatDate.second);
+              chats[i].timeFrome1970 = date.getTime();
+              chatID[i] = {
+                id: chats[i].id
               };
             }
-            localStorageService.update("messageID", messageID);
+            localStorageService.update("chatID", chatID);
             for (i = 0; i < length; i++) {
-              localStorageService.update("message_" + messages[i].id, messages[i]);
+              localStorageService.update("chat_" + chats[i].id, chats[i]);
             }
           }
         },
@@ -169,7 +152,6 @@ angular.module('wechat.services', [])
         getAllUser: function() {
           var url = 'http://' + IP + ':' + PORT + '/user/getAllUser.json';
           return $http.get(url).then(function(response) {
-            //console.log('length: ' + response.data);
             return response.data;
           });
         },
@@ -214,70 +196,70 @@ angular.module('wechat.services', [])
           });
         },
 
-        getAllMessages: function () {
-          var messages = new Array();
+        getChats: function () {
+          var chats = new Array();
           var i = 0;
-          var messageID = localStorageService.get("messageID");
+          var chatID = localStorageService.get("chatID");
           var length = 0;
-          var message = null;
-          if (messageID) {
-            length = messageID.length;
+          var chat = null;
+          if (chatID) {
+            length = chatID.length;
 
             for (; i < length; i++) {
-              message = localStorageService.get("message_" + messageID[i].id);
-              if (message) {
-                messages.push(message);
+              chat = localStorageService.get("chat_" + chatID[i].id);
+              if (chat) {
+                chats.push(chat);
               }
             }
-            dateService.handleMessageDate(messages);
-            return messages;
+            dateService.handleChatDate(chats);
+            return chats;
           }
           return null;
         },
-        getMessageById: function (id) {
-          return localStorageService.get("message_" + id);
+        getChatById: function (id) {
+          return localStorageService.get("chat_" + id);
         },
         getAmountMessageById: function (num, id) {
-          var messages = [];
-          var message = localStorageService.get("message_" + id).messages;
+          var chats = [];
+          var chat = localStorageService.get("chat_" + id).messages;
           var length = 0;
-          if (num < 0 || !message) return;
-          length = message.length;
+          if (num < 0 || !chat) return;
+          length = chat.length;
           if (num < length) {
-            messages = message.splice(length - num, length);
-            return messages;
+            chats = chat.splice(length - num, length);
+            return chats;
           } else {
-            return message;
+            return chat;
           }
         },
-        updateMessage: function (message) {
+        updateChat: function (chat) {
           var id = 0;
-          if (message) {
-            id = message.id;
-            localStorageService.update("message_" + id, message);
+          if (chat) {
+            id = chat.id;
+            localStorageService.update("chat_" + id, chat);
           }
         },
-        deleteMessageId: function (id) {
-          var messageId = localStorageService.get("messageID");
+        deleteChatId: function (id) {
+          var chatId = localStorageService.get("chatID");
           var length = 0;
           var i = 0;
-          if (!messageId) {
+          if (!chatId) {
             return null;
           }
-          length = messageId.length;
+          length = chatId.length;
           for (; i < length; i++) {
-            if (messageId[i].id === id) {
-              messageId.splice(i, 1);
+            if (chatId[i].id === id) {
+              chatId.splice(i, 1);
               break;
             }
           }
-          localStorageService.update("messageID", messageId);
+          localStorageService.update("chatID", chatId);
         },
-        clearMessage: function (message) {
+        clearChat: function (chat) {
           var id = 0;
-          if (message) {
-            id = message.id;
-            localStorageService.clear("message_" + id);
+          if (chat) {
+            id = chat.id;
+            localStorageService.clear("chat_" + id);
           }
         }
       };
