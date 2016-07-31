@@ -1,6 +1,19 @@
 angular.module('wechat.messageController', [])
 
-    .controller('messageCtrl', ['$scope', '$stateParams',
+    .config(function($httpProvider){
+    $httpProvider.defaults.transformRequest = function(obj){
+      var str = [];
+      for(var p in obj){
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+      return str.join("&");
+    }
+    $httpProvider.defaults.headers.post = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+
+  .controller('messageCtrl', ['$scope', '$stateParams',
       'messageService', '$ionicScrollDelegate', '$ionicActionSheet', '$timeout', '$ionicLoading',
       function ($scope, $stateParams, messageService, $ionicScrollDelegate, $ionicActionSheet, $timeout, $ionicLoading) {
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
@@ -290,7 +303,7 @@ angular.module('wechat.messageController', [])
           sendMessage($scope.msg + '___' + $scope.chat.friendCode);
           var data = generateMessage($scope.msg, 'TEXT');
           $scope.messages.push(data);
-          messageService.sendText($scope.chat.friendCode, $scope.msg);
+          messageService.sendText($scope.chat.id, $scope.chat.friendCode, $scope.msg);
           $scope.msg = '';
           viewScroll.scrollBottom();
         };

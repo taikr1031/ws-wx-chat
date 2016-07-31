@@ -1,6 +1,7 @@
 package com.zm.service.impl;
 
 import com.zm.model.chat.Chat;
+import com.zm.model.chat.Message;
 import com.zm.mongo.core.GenericMongoServiceImpl;
 import com.zm.service.ChatService;
 import com.zm.service.UserService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,6 +58,18 @@ public class ChatServiceImpl extends GenericMongoServiceImpl<Chat> implements Ch
   @Override
   public void sendMessage(String ownId, String friendId, String message) {
 
+  }
+
+  @Override
+  public void save(String chatId, String friendCode, String msg) {
+	Query query = new Query(Criteria.where("id").is(chatId));
+	Message message = new Message();
+	message.setFromeMe(true);
+	message.setContent(msg);
+	message.setPic("/pic");
+	message.setType("TEXT");
+	Update update = new Update().addToSet("messages", message);
+	this.getMongoTemplate().upsert(query, update, Chat.class);
   }
 
   private boolean isExistFriendChat(String openid, List<Chat> chats) {

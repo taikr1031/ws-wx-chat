@@ -15,4 +15,5 @@ public interface ChatService extends GenericMongoService<Chat> {
 
   void sendMessage(String ownId, String friendId, String message);
 
+  void save(String chatId, String friendCode, String msg);
 }

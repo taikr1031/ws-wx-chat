@@ -160,7 +160,7 @@ angular.module('wechat.services', [])
           var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + password;
           console.log('loginChat URL: ' + url);
           $http.get(url).then(function(response) {
-            console.log(response.data.name + '-=' + response.data.openid + ' loginChat success!');
+            console.log(response.data.user.name + '-=' + response.data.user.code + ' loginChat success!');
           });
         },
         isLoginSession: function(ownOpenId) {
@@ -173,12 +173,33 @@ angular.module('wechat.services', [])
             }
           });
         },
-        sendText: function (openid, msg) {
+        sendText: function (chatId, openid, msg) {
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=TEXT&openid=' + openid + '&content=' + msg;
           return $http.get(url).then(function (response) {
             console.log('TEXT success');
-            //users = response.data.results;
-            //return response.data.results;
+            //this.saveMessage(openid, msg);
+            var url = 'http://' + IP + ':' + PORT + '/chat/save';
+            alert(url);
+            var data = {
+              chatId: chatId,
+              openid: openid,
+              msg: msg
+            };
+            console.log('saveMessage' + data);
+            $http({
+                method: 'POST',
+                url:url,
+                data: data,
+                headers:{'Content-Type': 'application/x-www-form-urlencoded'},
+                transformRequest: function(obj) {
+                  var str = [];
+                  for(var p in obj){
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                  }
+                  return str.join("&");
+                }}).then(function(response) {
+                  console.log(response.data);
+            })
           });
         },
 
