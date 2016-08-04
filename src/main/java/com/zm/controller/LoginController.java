@@ -23,7 +23,7 @@ public class LoginController {
   private LoginService loginService;
 
   @RequestMapping("/login/{username}/{password}")
-  public User loginSession(@PathVariable("username") String username, @PathVariable("password") String password, HttpServletRequest httpRequest) throws ServletException {
+  public User login(@PathVariable("username") String username, @PathVariable("password") String password, HttpServletRequest httpRequest) throws ServletException {
 	User user = loginService.login(username, password);
 	if(user.getName() != null) {
 	  httpRequest.getSession().setAttribute(Constants.SESSION_USERNAME, user);

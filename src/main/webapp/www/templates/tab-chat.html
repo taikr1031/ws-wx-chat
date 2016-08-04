@@ -13,9 +13,9 @@
       <ion-item class="item-avatar" ng-class="{'rj-item-top': chat.isTop}" on-hold="popupMessageOpthins(message)"
                 rj-hold-active ng-repeat="chat in chats | orderBy:['isTop', 'timeFrome1970']:false"
                 ng-click="toMessage(chat)">
-        <img ng-src="{{chat.friendPic}}">
+        <img ng-src="{{chat.buserPic}}">
         <span class="rj-sm-red-icon" ng-show="chat.showHints"><p ng-bind="chat.noReadMessages"></p></span>
-        <h2 ng-bind="chat.friendName"></h2>
+        <h2 ng-bind="chat.buserName"></h2>
         <p class="rj-list-p" ng-bind="chat.lastMessage.content"></p>
         <span class="rj-push-right" ng-bind="chat.lastMessage.time"></span>
       </ion-item>

@@ -23,7 +23,7 @@ public class ChatController {
   @Autowired
   private ChatService chatService;
 
-  @RequestMapping("queryChat")
+  @RequestMapping("/queryChat")
   public List<Chat> queryChat(HttpServletRequest request) {
 	List<Chat> chats = null;
 	try {
@@ -31,7 +31,7 @@ public class ChatController {
 	  if (user == null) {
 		return new ArrayList<Chat>();
 	  }
-	  chats = chatService.queryAllChatByUserCode(user.getCode());
+	  chats = chatService.queryAllChatByUserId(user.getId());
 	} catch (Exception e) {
 	  e.printStackTrace();
 	}

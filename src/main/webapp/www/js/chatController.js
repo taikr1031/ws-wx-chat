@@ -1,12 +1,14 @@
 angular.module('wechat.chatController', [])
 
-    .controller('chatCtrl', function ($scope, $state, $ionicPopup, localStorageService, messageService) {
-      // $scope.chats = messageService.getChats();
-      // console.log($scope.chats);
+    .controller('chatCtrl', function ($scope, $state, $ionicPopup, $timeout, localStorageService, messageService) {
+
       $scope.$on("$ionicView.beforeEnter", function () {
-        // console.log($scope.chats);
-        //messageService.setFriendSessionInfo(OWN_OPEN_ID);
-        $scope.chats = messageService.getChats();
+        var promise = messageService.queryChat(); // 同步调用，获得承诺接口
+        promise.then(function(data) { // 调用承诺API获取数据 .resolve
+          $scope.chats = data.chatList;
+        }, function(data) { // 处理错误 .reject
+          console.log('ERROR!');
+        });
         $scope.popup = {
           isPopup: false,
           index: 0
@@ -15,28 +17,30 @@ angular.module('wechat.chatController', [])
       $scope.onSwipeLeft = function () {
         $state.go("tab.friends");
       };
-      $scope.popupMessageOpthins = function (message) {
-        $scope.popup.index = $scope.chats.indexOf(message);
+      $scope.popupMessageOpthins = function (chat) {
+        $scope.popup.index = $scope.chats.indexOf(chat);
         $scope.popup.optionsPopup = $ionicPopup.show({
           templateUrl: "templates/popup.html",
-          scope: $scope,
+          scope: $scope
         });
         $scope.popup.isPopup = true;
       };
       // 好友列表中好友头像右上方未读信息条数提示
       $scope.markMessage = function () {
+        var userId = messageService.getUserId();
+        alert(userId);
         var index = $scope.popup.index;
-        var message = $scope.chats[index];
-        if (message.showHints) {
-          message.showHints = false;
-          message.noReadMessages = 0;
+        var chat = $scope.chats[index];
+        if (chat.showHints) {
+          chat.showHints = false;
+          chat.noReadMessages = 0;
         } else {
-          message.showHints = true;
-          message.noReadMessages = 1;
+          chat.showHints = true;
+          chat.noReadMessages = 1;
         }
         $scope.popup.optionsPopup.close();
         $scope.popup.isPopup = false;
-        messageService.updateChat(message);
+        messageService.updateChat(chat);
       };
       // 好友列表页面中删除好友
       $scope.deleteMessage = function () {

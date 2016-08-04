@@ -118,8 +118,8 @@ angular.module('wechat.services', [])
     };
   }])
 
-  .factory('messageService', ['$http', 'localStorageService', 'dateService',
-    function ($http, localStorageService, dateService) {
+  .factory('messageService', ['$http', '$q', 'localStorageService', 'dateService',
+    function ($http, $q, localStorageService, dateService) {
       return {
         init: function (chats) {
           var i = 0;
@@ -156,9 +156,15 @@ angular.module('wechat.services', [])
           });
         },
 
+        getUserId: function() {
+          var url = 'http://' + IP + ':' + PORT + '/user/getUserId.json';
+          return $http.get(url).then(function(res) {
+            return res.data;
+          });
+        },
+
         loginChat: function(name, password) {
           var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + password;
-          console.log('loginChat URL: ' + url);
           $http.get(url).then(function(response) {
             console.log(response.data.user.name + '-=' + response.data.user.code + ' loginChat success!');
           });
@@ -175,11 +181,10 @@ angular.module('wechat.services', [])
         },
         sendText: function (chatId, openid, msg) {
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=TEXT&openid=' + openid + '&content=' + msg;
-          return $http.get(url).then(function (response) {
+          return $http.get(url).then(function (res) {
             console.log('TEXT success');
             //this.saveMessage(openid, msg);
             var url = 'http://' + IP + ':' + PORT + '/chat/save';
-            alert(url);
             var data = {
               chatId: chatId,
               openid: openid,
@@ -197,37 +202,54 @@ angular.module('wechat.services', [])
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                   }
                   return str.join("&");
-                }}).then(function(response) {
-                  console.log(response.data);
+                }}).then(function(res) {
+                  console.log(res.data);
             })
           });
         },
 
         sendImage: function (openid, msg) {
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=IMAGE&openid=' + openid + '&content=' + msg;
-          return $http.get(url).then(function (response) {
+          return $http.get(url).then(function (res) {
             console.log('IMAGE success');
           });
         },
 
         sendVoice: function (openid, mediaId) {
           var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=VOICE&openid=' + openid + '&content=' + mediaId;
-          return $http.get(url).then(function (response) {
+          return $http.get(url).then(function (res) {
             console.log('VOICE success');
           });
         },
 
-        getChats: function () {
+        queryChat: function() {
+          var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';
+          var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
+          $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
+            deferred.resolve(data);
+          }).error(function(data, status, headers, config) {
+            deferred.reject(data);
+          });
+          return deferred.promise;
+        },
+        __queryChat: function() {
+          var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';
+          return $http.get(url).then(function(res) {
+            console.log(res.data.chatList);
+            return res.data.chatList;
+          })
+        },
+        _getChats: function () {
           var chats = new Array();
           var i = 0;
-          var chatID = localStorageService.get("chatID");
+          var chatId = localStorageService.get("chatId");
           var length = 0;
           var chat = null;
-          if (chatID) {
-            length = chatID.length;
+          if (chatId) {
+            length = chatId.length;
 
             for (; i < length; i++) {
-              chat = localStorageService.get("chat_" + chatID[i].id);
+              chat = localStorageService.get("chat_" + chatId[i].id);
               if (chat) {
                 chats.push(chat);
               }
@@ -285,4 +307,4 @@ angular.module('wechat.services', [])
         }
       };
     }
-  ])
+  ]);

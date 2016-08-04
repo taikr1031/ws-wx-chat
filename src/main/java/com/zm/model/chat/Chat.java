@@ -10,124 +10,181 @@ import java.util.List;
 @Document
 public class Chat extends GenericObject {
 
-  private String ownId;
-  private String ownPic;
-  private String ownCode;
-  private String ownName;
-  private String friendId;
-  private String friendPic;
-  private String friendCode;
-  private String friendName;
-  private int noReadMessages;
-  private long timeFrome1970;
-  private Timestamp originalTime;
-  private boolean top;
-  private boolean showHints;
+  private String[] ids;
+  private String auserId;
+  private String auserPic;
+  private String auserCode;
+  private String auserName;
+
+  private String buserId;
+  private String buserPic;
+  private String buserCode;
+  private String buserName;
+
+  private int auserNoReadNum;
+  private int buserNoReadNum;
+  private long auserTimeFrome1970;
+  private long buserTimeFrome1970;
+  private Timestamp auserOriginalTime;
+  private Timestamp buserOriginalTime;
+  private boolean auserTop;
+  private boolean buserTop;
+  private boolean auserShowHints; // 标记为未读
+  private boolean buserShowHints;
+
   private Message lastMessage;
   private List<Message> messages;
 
-  public String getOwnId() {
-	return ownId;
+  public String[] getIds() {
+	return ids;
   }
 
-  public void setOwnId(String ownId) {
-	this.ownId = ownId;
+  public void setIds(String[] ids) {
+	this.ids = ids;
   }
 
-  public String getOwnPic() {
-	return ownPic;
+  public long getBuserTimeFrome1970() {
+	return buserTimeFrome1970;
   }
 
-  public void setOwnPic(String ownPic) {
-	this.ownPic = ownPic;
+  public void setBuserTimeFrome1970(long buserTimeFrome1970) {
+	this.buserTimeFrome1970 = buserTimeFrome1970;
   }
 
-  public String getOwnCode() {
-	return ownCode;
+  public String getAuserId() {
+	return auserId;
   }
 
-  public void setOwnCode(String ownCode) {
-	this.ownCode = ownCode;
+  public void setAuserId(String auserId) {
+	this.auserId = auserId;
   }
 
-  public String getFriendId() {
-	return friendId;
+  public String getAuserPic() {
+	return auserPic;
   }
 
-  public void setFriendId(String friendId) {
-	this.friendId = friendId;
+  public void setAuserPic(String auserPic) {
+	this.auserPic = auserPic;
   }
 
-  public String getFriendPic() {
-	return friendPic;
+  public String getAuserCode() {
+	return auserCode;
   }
 
-  public void setFriendPic(String friendPic) {
-	this.friendPic = friendPic;
+  public void setAuserCode(String auserCode) {
+	this.auserCode = auserCode;
   }
 
-  public String getFriendCode() {
-	return friendCode;
+  public String getAuserName() {
+	return auserName;
   }
 
-  public void setFriendCode(String friendCode) {
-	this.friendCode = friendCode;
+  public void setAuserName(String auserName) {
+	this.auserName = auserName;
   }
 
-  public int getNoReadMessages() {
-	return noReadMessages;
+  public String getBuserId() {
+	return buserId;
   }
 
-  public void setNoReadMessages(int noReadMessages) {
-	this.noReadMessages = noReadMessages;
+  public void setBuserId(String buserId) {
+	this.buserId = buserId;
   }
 
-  public long getTimeFrome1970() {
-	return timeFrome1970;
+  public String getBuserPic() {
+	return buserPic;
   }
 
-  public void setTimeFrome1970(long timeFrome1970) {
-	this.timeFrome1970 = timeFrome1970;
+  public void setBuserPic(String buserPic) {
+	this.buserPic = buserPic;
   }
 
-  public boolean isTop() {
-	return top;
+  public String getBuserCode() {
+	return buserCode;
   }
 
-  public void setTop(boolean top) {
-	this.top = top;
+  public void setBuserCode(String buserCode) {
+	this.buserCode = buserCode;
   }
 
-  public boolean isShowHints() {
-	return showHints;
+  public String getBuserName() {
+	return buserName;
   }
 
-  public void setShowHints(boolean showHints) {
-	this.showHints = showHints;
+  public void setBuserName(String buserName) {
+	this.buserName = buserName;
   }
 
-  public String getOwnName() {
-	return ownName;
+  public int getAuserNoReadNum() {
+	return auserNoReadNum;
   }
 
-  public void setOwnName(String ownName) {
-	this.ownName = ownName;
+  public void setAuserNoReadNum(int auserNoReadNum) {
+	this.auserNoReadNum = auserNoReadNum;
   }
 
-  public String getFriendName() {
-	return friendName;
+  public int getBuserNoReadNum() {
+	return buserNoReadNum;
   }
 
-  public void setFriendName(String friendName) {
-	this.friendName = friendName;
+  public void setBuserNoReadNum(int buserNoReadNum) {
+	this.buserNoReadNum = buserNoReadNum;
   }
 
-  public Timestamp getOriginalTime() {
-	return originalTime;
+  public long getAuserTimeFrome1970() {
+	return auserTimeFrome1970;
   }
 
-  public void setOriginalTime(Timestamp originalTime) {
-	this.originalTime = originalTime;
+  public void setAuserTimeFrome1970(long auserTimeFrome1970) {
+	this.auserTimeFrome1970 = auserTimeFrome1970;
+  }
+
+  public Timestamp getAuserOriginalTime() {
+	return auserOriginalTime;
+  }
+
+  public void setAuserOriginalTime(Timestamp auserOriginalTime) {
+	this.auserOriginalTime = auserOriginalTime;
+  }
+
+  public Timestamp getBuserOriginalTime() {
+	return buserOriginalTime;
+  }
+
+  public void setBuserOriginalTime(Timestamp buserOriginalTime) {
+	this.buserOriginalTime = buserOriginalTime;
+  }
+
+  public boolean isAuserTop() {
+	return auserTop;
+  }
+
+  public void setAuserTop(boolean auserTop) {
+	this.auserTop = auserTop;
+  }
+
+  public boolean isBuserTop() {
+	return buserTop;
+  }
+
+  public void setBuserTop(boolean buserTop) {
+	this.buserTop = buserTop;
+  }
+
+  public boolean isAuserShowHints() {
+	return auserShowHints;
+  }
+
+  public void setAuserShowHints(boolean auserShowHints) {
+	this.auserShowHints = auserShowHints;
+  }
+
+  public boolean isBuserShowHints() {
+	return buserShowHints;
+  }
+
+  public void setBuserShowHints(boolean buserShowHints) {
+	this.buserShowHints = buserShowHints;
   }
 
   public Message getLastMessage() {

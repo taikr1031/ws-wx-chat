@@ -6,19 +6,28 @@ import java.sql.Timestamp;
 
 public class Message extends GenericObject {
 
-  private boolean fromeMe;
+//  private boolean fromeMe;
+  private String userId;
   private String content;
   private String pic;
   private String type;
   private String mediaId;
   private Timestamp time;
 
-  public boolean isFromeMe() {
-	return fromeMe;
+//  public boolean isFromeMe() {
+//	return fromeMe;
+//  }
+//
+//  public void setFromeMe(boolean fromeMe) {
+//	this.fromeMe = fromeMe;
+//  }
+
+  public String getUserId() {
+	return userId;
   }
 
-  public void setFromeMe(boolean fromeMe) {
-	this.fromeMe = fromeMe;
+  public void setUserId(String userId) {
+	this.userId = userId;
   }
 
   public String getContent() {

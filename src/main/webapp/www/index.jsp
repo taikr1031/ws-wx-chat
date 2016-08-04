@@ -23,6 +23,7 @@
   <script src="/www/js/directives.js"></script>
   <script src="/www/js/elastic.js"></script>
   <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+  <c:set var="userId" value="${sessionScope.SESSION_USERNAME.id}"/>
 </head>
 
 <body ng-app="wechat">

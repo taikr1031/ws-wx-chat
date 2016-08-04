@@ -14,8 +14,8 @@ angular.module('wechat.messageController', [])
   })
 
   .controller('messageCtrl', ['$scope', '$stateParams',
-      'messageService', '$ionicScrollDelegate', '$ionicActionSheet', '$timeout', '$ionicLoading',
-      function ($scope, $stateParams, messageService, $ionicScrollDelegate, $ionicActionSheet, $timeout, $ionicLoading) {
+      '$ionicScrollDelegate', '$ionicActionSheet', '$timeout', '$ionicLoading', 'messageService',
+      function ($scope, $stateParams, $ionicScrollDelegate, $ionicActionSheet, $timeout, $ionicLoading, messageService) {
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
         var beginDate;
         // 聊天界面中录音按钮开启（down）和停止（up）事件绑定

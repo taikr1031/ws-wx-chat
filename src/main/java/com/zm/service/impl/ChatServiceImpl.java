@@ -21,34 +21,15 @@ public class ChatServiceImpl extends GenericMongoServiceImpl<Chat> implements Ch
   private UserService userService;
 
   @Override
-  public List<Chat> queryAllChatByUserCode(String ownCode) {
+  public List<Chat> queryAllChatByUserId(String userId) {
 	Query query = new Query();
-	query.addCriteria(Criteria.where("ownCode").is(ownCode));
+	Criteria c = new Criteria().orOperator(Criteria.where("auserId").is(userId), Criteria.where("buserId").is(userId));
+	query.addCriteria(c);
+//	query.addCriteria(Criteria.where("auserId").is(userId).orOperator(Criteria.where("buserId").is(userId)));
 	query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "originalTime")));
 	List<Chat> chats = getMongoTemplate().find(query, Chat.class);
 	return chats;
   }
-
-//  @Override
-//  public List<Chat> queryAllChatWithoutOwn(String ownCode) {
-//	List<Chat> chats = getMongoTemplate().findAll(Chat.class);
-//	List<User> users = userService.getAllObjects();
-//	for (User user : users) {
-//	  String friendCode = user.getCode();
-//	  if (!ownCode.equals(friendCode)) {
-//		if (!isExistFriendChat(user.getCode(), chats)) {
-//		  Chat chat = new Chat();
-//		  chat.setFriendId(user.getId());
-//		  chat.setFriendName(user.getName());
-//		  chat.setFriendCode(user.getCode());
-//		  chat.setFriendPic(user.getPicture().getThumbnail());
-//		  chats.add(chat);
-//		}
-//
-//	  }
-//	}
-//	return chats;
-//  }
 
   @Override
   public Chat getChatByFriend(String ownId, String friendId) {
@@ -64,7 +45,7 @@ public class ChatServiceImpl extends GenericMongoServiceImpl<Chat> implements Ch
   public void save(String chatId, String friendCode, String msg) {
 	Query query = new Query(Criteria.where("id").is(chatId));
 	Message message = new Message();
-	message.setFromeMe(true);
+//	message.setFromeMe(true);
 	message.setContent(msg);
 	message.setPic("/pic");
 	message.setType("TEXT");
@@ -74,7 +55,7 @@ public class ChatServiceImpl extends GenericMongoServiceImpl<Chat> implements Ch
 
   private boolean isExistFriendChat(String openid, List<Chat> chats) {
 	for (Chat chat : chats) {
-	  if (chat.getFriendCode().equals(openid)) {
+	  if (chat.getBuserCode().equals(openid)) {
 		return true;
 	  }
 	}

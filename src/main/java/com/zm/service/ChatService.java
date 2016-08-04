@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ChatService extends GenericMongoService<Chat> {
 
-  List<Chat> queryAllChatByUserCode(String ownCode);
+  List<Chat> queryAllChatByUserId(String ownCode);
 
 //  List<Chat> queryAllChatWithoutOwn(String ownCode);
 
