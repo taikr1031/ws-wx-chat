@@ -3,12 +3,26 @@ angular.module('wechat.chatController', [])
     .controller('chatCtrl', function ($scope, $state, $ionicPopup, $timeout, localStorageService, messageService) {
 
       $scope.$on("$ionicView.beforeEnter", function () {
-        var promise = messageService.queryChat(); // 同步调用，获得承诺接口
-        promise.then(function(data) { // 调用承诺API获取数据 .resolve
+        var promiseChat = messageService.queryChat(); // 同步调用，获得承诺接口
+        promiseChat.then(function(data) { // 调用承诺API获取数据 .resolve
           $scope.chats = data.chatList;
         }, function(data) { // 处理错误 .reject
-          console.log('ERROR!');
+          console.log('queryChat error!');
         });
+        console.log($scope.chats);
+
+        //var promiseUser = messageService.getUserId();
+        //promiseUser.then(function(data) {
+        //  console.log(data);
+        //  $scope.userId = data;
+        //}, function(data) {
+        //  console.log('getUserId error!');
+        //});
+
+        var userId = messageService.getUserId();
+        $scope.userId = userId;
+        console.log('beforeEnter userId: ' + $scope.userId);
+
         $scope.popup = {
           isPopup: false,
           index: 0
@@ -28,7 +42,7 @@ angular.module('wechat.chatController', [])
       // 好友列表中好友头像右上方未读信息条数提示
       $scope.markMessage = function () {
         var userId = messageService.getUserId();
-        alert(userId);
+        alert('markMessage ' + userId);
         var index = $scope.popup.index;
         var chat = $scope.chats[index];
         if (chat.showHints) {

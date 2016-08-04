@@ -10,12 +10,18 @@
 <ion-view>
   <ion-content on-swipe-left="onSwipeLeft()">
     <ion-list rj-close-back-drop>
+
       <ion-item class="item-avatar" ng-class="{'rj-item-top': chat.isTop}" on-hold="popupMessageOpthins(message)"
                 rj-hold-active ng-repeat="chat in chats | orderBy:['isTop', 'timeFrome1970']:false"
                 ng-click="toMessage(chat)">
-        <img ng-src="{{chat.buserPic}}">
-        <span class="rj-sm-red-icon" ng-show="chat.showHints"><p ng-bind="chat.noReadMessages"></p></span>
-        <h2 ng-bind="chat.buserName"></h2>
+
+        <img ng-if="userId == chat.auserId" ng-src="{{chat.buserPic}}">
+        <img ng-if="userId == chat.buserId" ng-src="{{chat.auserPic}}">
+        <span ng-if="userId == chat.auserId" class="rj-sm-red-icon" ng-show="chat.buserShowHints"><p ng-bind="chat.buserNoReadNum"></p></span>
+        <span ng-if="userId == chat.buserId" class="rj-sm-red-icon" ng-show="chat.auserShowHints"><p ng-bind="chat.auserNoReadNum"></p></span>
+        <h2 ng-if="userId == chat.auserId" ng-bind="chat.buserName"></h2>
+        <h2 ng-if="userId == chat.buserId" ng-bind="chat.auserName"></h2>
+        -{{userId}}={{chat.auserId}}*{{chat.buserId}}//{{chat.buserPic}}
         <p class="rj-list-p" ng-bind="chat.lastMessage.content"></p>
         <span class="rj-push-right" ng-bind="chat.lastMessage.time"></span>
       </ion-item>

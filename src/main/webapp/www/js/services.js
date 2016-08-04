@@ -156,12 +156,41 @@ angular.module('wechat.services', [])
           });
         },
 
+        queryChat: function() {
+          var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';
+          var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
+          $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
+            deferred.resolve(data);
+          }).error(function(data, status, headers, config) {
+            deferred.reject(data);
+          });
+          return deferred.promise;
+        },
+
         getUserId: function() {
           var url = 'http://' + IP + ':' + PORT + '/user/getUserId.json';
-          return $http.get(url).then(function(res) {
-            return res.data;
+          var userId;
+          $.ajax({
+            async: false,
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            success: function (data) {
+              userId = data.stringList[0];
+            }
           });
+          return userId;
         },
+        //getUserId: function() {
+        //  var url = 'http://' + IP + ':' + PORT + '/user/getUserId.json';
+        //  var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
+        //  $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
+        //    deferred.resolve(data);
+        //  }).error(function(data, status, headers, config) {
+        //    deferred.reject(data);
+        //  });
+        //  return deferred.promise;
+        //},
 
         loginChat: function(name, password) {
           var url = 'http://' + IP + ':' + PORT + '/login/login/' + name + '/' + password;
@@ -222,43 +251,6 @@ angular.module('wechat.services', [])
           });
         },
 
-        queryChat: function() {
-          var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';
-          var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
-          $http({method: 'GET', url: url}).success(function(data, status, headers, config) {
-            deferred.resolve(data);
-          }).error(function(data, status, headers, config) {
-            deferred.reject(data);
-          });
-          return deferred.promise;
-        },
-        __queryChat: function() {
-          var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';
-          return $http.get(url).then(function(res) {
-            console.log(res.data.chatList);
-            return res.data.chatList;
-          })
-        },
-        _getChats: function () {
-          var chats = new Array();
-          var i = 0;
-          var chatId = localStorageService.get("chatId");
-          var length = 0;
-          var chat = null;
-          if (chatId) {
-            length = chatId.length;
-
-            for (; i < length; i++) {
-              chat = localStorageService.get("chat_" + chatId[i].id);
-              if (chat) {
-                chats.push(chat);
-              }
-            }
-            dateService.handleChatDate(chats);
-            return chats;
-          }
-          return null;
-        },
         getChatById: function (id) {
           return localStorageService.get("chat_" + id);
         },
