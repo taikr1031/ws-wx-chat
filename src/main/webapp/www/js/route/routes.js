@@ -1,4 +1,4 @@
-angular.module('wechat.routes', [])
+angular.module('chat.routes', [])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -9,16 +9,17 @@ angular.module('wechat.routes', [])
             templateUrl: "templates/tabs.html",
           })
           .state('tab.chat', {
-            url: '/chat',
+            url: '/chat/:userName',
             views: {
               'tab-chat': {
                 templateUrl: 'templates/tab-chat.html',
-                controller: "chatCtrl"
+                controller: "chatCtrl",
+                cache: false
               }
             }
           })
           .state('message', {
-            url: '/message/:chatId',
+            url: '/message/:chatId/:chatIndex',
             templateUrl: "templates/message.html",
             controller: "messageCtrl"
           })

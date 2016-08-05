@@ -1,25 +1,17 @@
-angular.module('wechat.chatController', [])
+angular.module('chat.chatController', [])
 
-    .controller('chatCtrl', function ($scope, $state, $ionicPopup, $timeout, localStorageService, messageService) {
-
+    .controller('chatCtrl', function ($scope, $state, $stateParams, $ionicPopup, $timeout, localStorageService, chatService) {
       $scope.$on("$ionicView.beforeEnter", function () {
-        var promiseChat = messageService.queryChat(); // 同步调用，获得承诺接口
-        promiseChat.then(function(data) { // 调用承诺API获取数据 .resolve
+        $scope.userName = $stateParams.userName;
+        var promiseChats = chatService.queryChat(); // 同步调用，获得承诺接口
+        promiseChats.then(function(data) { // 调用承诺API获取数据 .resolve
           $scope.chats = data.chatList;
         }, function(data) { // 处理错误 .reject
           console.log('queryChat error!');
         });
         console.log($scope.chats);
 
-        //var promiseUser = messageService.getUserId();
-        //promiseUser.then(function(data) {
-        //  console.log(data);
-        //  $scope.userId = data;
-        //}, function(data) {
-        //  console.log('getUserId error!');
-        //});
-
-        var userId = messageService.getUserId();
+        var userId = chatService.getUserId();
         $scope.userId = userId;
         console.log('beforeEnter userId: ' + $scope.userId);
 
@@ -28,9 +20,11 @@ angular.module('wechat.chatController', [])
           index: 0
         };
       });
+
       $scope.onSwipeLeft = function () {
         $state.go("tab.friends");
       };
+
       $scope.popupMessageOpthins = function (chat) {
         $scope.popup.index = $scope.chats.indexOf(chat);
         $scope.popup.optionsPopup = $ionicPopup.show({
@@ -39,9 +33,10 @@ angular.module('wechat.chatController', [])
         });
         $scope.popup.isPopup = true;
       };
+
       // 好友列表中好友头像右上方未读信息条数提示
       $scope.markMessage = function () {
-        var userId = messageService.getUserId();
+        var userId = chatService.getUserId();
         alert('markMessage ' + userId);
         var index = $scope.popup.index;
         var chat = $scope.chats[index];
@@ -54,8 +49,9 @@ angular.module('wechat.chatController', [])
         }
         $scope.popup.optionsPopup.close();
         $scope.popup.isPopup = false;
-        messageService.updateChat(chat);
+        chatService.updateChat(chat);
       };
+
       // 好友列表页面中删除好友
       $scope.deleteMessage = function () {
         var index = $scope.popup.index;
@@ -63,9 +59,10 @@ angular.module('wechat.chatController', [])
         $scope.chats.splice(index, 1);
         $scope.popup.optionsPopup.close();
         $scope.popup.isPopup = false;
-        messageService.deleteChatId(message.id);
-        messageService.clearChat(message);
+        chatService.deleteChatId(message.id);
+        chatService.clearChat(message);
       };
+
       // 好友列表页面设置好友置顶
       $scope.topMessage = function () {
         var index = $scope.popup.index;
@@ -77,12 +74,14 @@ angular.module('wechat.chatController', [])
         }
         $scope.popup.optionsPopup.close();
         $scope.popup.isPopup = false;
-        messageService.updateChat(message);
+        chatService.updateChat(message);
       };
-      $scope.toMessage = function (chat) {
-        console.log(chat.id);
+
+      $scope.toMessage = function (chatId, userName, index) {
         $state.go("message", {
-          "chatId": chat.id
+          "chatId": chatId,
+          "userName": userName,
+          "chatIndex": index
         });
       };
     });

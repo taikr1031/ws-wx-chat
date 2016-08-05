@@ -1,4 +1,4 @@
-angular.module('wechat.controllers', [])
+angular.module('chat.controllers', [])
 
     .controller('settingCtrl', function ($scope, $state) {
       $scope.onSwipeRight = function () {

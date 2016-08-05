@@ -1,14 +1,15 @@
-var IP = '192.168.1.8';
+var IP = '10.68.19.114';
 var PORT = '8080';
 
-angular.module('wechat', ['ionic', 'wechat.controllers', 'wechat.chatController',
-      'wechat.messageController', 'wechat.settingController', 'wechat.routes',
-      'wechat.services', 'wechat.directives', 'monospaced.elastic'
+angular.module('chat', ['ionic', 'chat.controllers', 'chat.chatController',
+      'chat.messageController', 'chat.settingController', 'chat.routes',
+      'chat.services', 'chat.dateService', 'chat.messageService', 'chat.settingService', 'chat.chatService',
+      'chat.directives', 'monospaced.elastic'
     ])
 
-    .config(['$ionicConfigProvider', function ($rootScope, $ionicConfigProvider) {
+    //.config(['$ionicConfigProvider', function ($rootScope, $ionicConfigProvider) {
       //$ionicConfigProvider.tabs.position('bottom'); // other values: top
-    }])
+    //}])
 
     .run(function ($ionicPlatform, $http, messageService, dateService) {
       var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';

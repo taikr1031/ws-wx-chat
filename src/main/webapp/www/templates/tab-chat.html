@@ -1,5 +1,5 @@
 <ion-header-bar align-title="left" class="bar-dark">
-  <div class="h1 title">微信(16)</div>
+  <div class="h1 title">微信-【{{userName}}】</div>
   <div class="buttons">
     <button class="button no-animation button-icon icon ion-android-search">
     </button>
@@ -7,21 +7,20 @@
     </button>
   </div>
 </ion-header-bar>
+
 <ion-view>
   <ion-content on-swipe-left="onSwipeLeft()">
     <ion-list rj-close-back-drop>
-
       <ion-item class="item-avatar" ng-class="{'rj-item-top': chat.isTop}" on-hold="popupMessageOpthins(message)"
-                rj-hold-active ng-repeat="chat in chats | orderBy:['isTop', 'timeFrome1970']:false"
-                ng-click="toMessage(chat)">
-
+                rj-hold-active ng-repeat="chat in chats | orderBy:['isTop']:false"
+                ng-click="toMessage(chat.id, chat.name, $index)">
         <img ng-if="userId == chat.auserId" ng-src="{{chat.buserPic}}">
         <img ng-if="userId == chat.buserId" ng-src="{{chat.auserPic}}">
         <span ng-if="userId == chat.auserId" class="rj-sm-red-icon" ng-show="chat.buserShowHints"><p ng-bind="chat.buserNoReadNum"></p></span>
         <span ng-if="userId == chat.buserId" class="rj-sm-red-icon" ng-show="chat.auserShowHints"><p ng-bind="chat.auserNoReadNum"></p></span>
         <h2 ng-if="userId == chat.auserId" ng-bind="chat.buserName"></h2>
         <h2 ng-if="userId == chat.buserId" ng-bind="chat.auserName"></h2>
-        -{{userId}}={{chat.auserId}}*{{chat.buserId}}//{{chat.buserPic}}
+         -{{userId}}={{chat.auserId}}*{{chat.buserId}}
         <p class="rj-list-p" ng-bind="chat.lastMessage.content"></p>
         <span class="rj-push-right" ng-bind="chat.lastMessage.time"></span>
       </ion-item>
