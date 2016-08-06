@@ -13,9 +13,9 @@ angular.module('chat.messageController', [])
       }
     })
 
-    .controller('messageCtrl', ['$scope', '$stateParams',
+    .controller('messageCtrl', ['$rootScope', '$scope', '$stateParams',
       '$ionicScrollDelegate', '$ionicActionSheet', '$timeout', '$ionicLoading', 'messageService',
-      function ($scope, $stateParams, $ionicScrollDelegate, $ionicActionSheet, $timeout, $ionicLoading, messageService) {
+      function ($rootScope, $scope, $stateParams, $ionicScrollDelegate, $ionicActionSheet, $timeout, $ionicLoading, messageService) {
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
         var beginDate;
         // 聊天界面中录音按钮开启（down）和停止（up）事件绑定
@@ -53,12 +53,13 @@ angular.module('chat.messageController', [])
           });
           var userIds = $stateParams.chatId.split('-');
 
+          // 将该聊天信息的未读条数清除和未读状态
           if($scope.userId == userIds[0]) {
-            $scope.chats[chatIndex].auserNoReadNum = 0;
-            $scope.chats[chatIndex].auserShowHints = false;
+            $rootScope.chatList[chatIndex].auserNoReadNum = 0;
+            $rootScope.chatList[chatIndex].auserShowHints = false;
           } else {
-            $scope.chats[chatIndex].buserNoReadNum = 0;
-            $scope.chats[chatIndex].buserShowHints = false;
+            $rootScope.chatList[chatIndex].buserNoReadNum = 0;
+            $rootScope.chatList[chatIndex].buserShowHints = false;
           }
           //messageService.updateChat($scope.chat);
           $scope.messageNum = 10;
@@ -310,7 +311,9 @@ angular.module('chat.messageController', [])
 
         /* TEXT */
         $scope.sendText = function () {
-          sendMessage($scope.msg + '___' + $scope.chat.friendCode);
+          //var userIds = $stateParams.chatId.split('-');
+          console.log($scope.userId + '-=' + $scope.friendId + '**' +  + $rootScope.friendId);
+          sendMessage($scope.msg + '___' + $rootScope.friendId);
           var data = generateMessage($scope.msg, 'TEXT');
           $scope.messages.push(data);
           messageService.sendText($scope.chat.id, $scope.chat.friendCode, $scope.msg);

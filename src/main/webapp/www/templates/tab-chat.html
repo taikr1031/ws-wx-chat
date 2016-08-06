@@ -1,5 +1,5 @@
 <ion-header-bar align-title="left" class="bar-dark">
-  <div class="h1 title">微信-【{{userName}}】</div>
+  <div class="h1 title">微信 -【{{userName}}】</div>
   <div class="buttons">
     <button class="button no-animation button-icon icon ion-android-search">
     </button>
@@ -14,8 +14,8 @@
       <ion-item class="item-avatar" ng-class="{'rj-item-top': chat.isTop}" on-hold="popupMessageOpthins(message)"
                 rj-hold-active ng-repeat="chat in chats | orderBy:['isTop']:false"
                 ng-click="toMessage(chat.id, chat.name, $index)">
-        <img ng-if="userId == chat.auserId" ng-src="{{chat.buserPic}}">
-        <img ng-if="userId == chat.buserId" ng-src="{{chat.auserPic}}">
+        <img ng-if="userId == chat.auserId" ng-src="{{chat.buserPic}}" ng-init="friendId=chat.buserId">
+        <img ng-if="userId == chat.buserId" ng-src="{{chat.auserPic}}" ng-init="friendId=chat.auserId">
         <span ng-if="userId == chat.auserId" class="rj-sm-red-icon" ng-show="chat.buserShowHints"><p ng-bind="chat.buserNoReadNum"></p></span>
         <span ng-if="userId == chat.buserId" class="rj-sm-red-icon" ng-show="chat.auserShowHints"><p ng-bind="chat.auserNoReadNum"></p></span>
         <h2 ng-if="userId == chat.auserId" ng-bind="chat.buserName"></h2>

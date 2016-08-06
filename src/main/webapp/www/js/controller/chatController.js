@@ -1,11 +1,12 @@
 angular.module('chat.chatController', [])
 
-    .controller('chatCtrl', function ($scope, $state, $stateParams, $ionicPopup, $timeout, localStorageService, chatService) {
+    .controller('chatCtrl', function ($rootScope, $scope, $state, $stateParams, $ionicPopup, $timeout, localStorageService, chatService) {
       $scope.$on("$ionicView.beforeEnter", function () {
         $scope.userName = $stateParams.userName;
         var promiseChats = chatService.queryChat(); // 同步调用，获得承诺接口
         promiseChats.then(function(data) { // 调用承诺API获取数据 .resolve
           $scope.chats = data.chatList;
+          $rootScope.chatList = data.chatList;
         }, function(data) { // 处理错误 .reject
           console.log('queryChat error!');
         });
