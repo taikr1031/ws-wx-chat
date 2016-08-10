@@ -67,7 +67,7 @@ public class ChatTest {
 	chat.setBuserOriginalTime(new Timestamp(System.currentTimeMillis()));
 
 	Message msg1 = new Message();
-	msg1.setId(auserId);
+//	msg1.setId(auserId);
 	msg1.setUserId("1");
 	msg1.setContent("content" + auserId);
 	msg1.setPic("/www/img/" + auserId + ".png");
@@ -76,12 +76,12 @@ public class ChatTest {
 	chat.addMessage(msg1);
 
 	Message msg2 = new Message();
-	msg2.setId(buserId);
-	msg2.setId("2");
+//	msg2.setId(buserId);
+	msg2.setUserId("2");
 	msg2.setContent("content" + buserId);
 	msg2.setPic("/www/img/" + buserId + ".png");
-	msg1.setType("TEXT");
-	msg1.setMediaId("mdeia" + buserId);
+	msg2.setType("TEXT");
+	msg2.setMediaId("mdeia" + buserId);
 	chat.setLastMessage(msg2);
 	chat.addMessage(msg2);
 

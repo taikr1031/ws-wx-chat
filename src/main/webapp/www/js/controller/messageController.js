@@ -59,7 +59,6 @@ angular.module('chat.messageController', [])
           }, function(data) { // 处理错误 .reject
             console.log('queryMessage error!');
           });
-          console.log($scope.userModel.ownId + '-=' + $scope.userModel.ownName);
           // 将该聊天信息的未读条数清除和未读状态
           //if($scope.userId == userIds[0]) {
           if($rootScope.chatList[chatIndex].auserId == friendId) {
@@ -71,8 +70,10 @@ angular.module('chat.messageController', [])
           }
           // 设置聊天对象的openid
           if($rootScope.chatList[chatIndex].auserId == friendId) {
+            $scope.userModel.ownPic = $rootScope.chatList[chatIndex].buserPic;
             $scope.userModel.friendCode = $rootScope.chatList[chatIndex].auserCode;
           } else {
+            $scope.userModel.ownPic = $rootScope.chatList[chatIndex].auserPic;
             $scope.userModel.friendCode = $rootScope.chatList[chatIndex].buserCode;
           }
           //messageService.updateChat($scope.chat);
@@ -114,7 +115,8 @@ angular.module('chat.messageController', [])
           };
           ws.onmessage = function (event) {
             log('Received: ' + event.data);
-            var data = generateMessage(event.data, 'TEXT');
+            var ownId = ($scope.userModel.chatId.split('-')[0] == $scope.userModel.ownId) ? $scope.userModel.chatId.split('-')[1] : $scope.userModel.chatId.split('-')[0];
+            var data = generateMessage(event.data, ownId, $scope.userModel.ownPic, 'TEXT');
             $scope.messages.push(data);
             $timeout(function () {
               viewScroll.scrollBottom();
@@ -317,27 +319,27 @@ angular.module('chat.messageController', [])
         };
         /* VOICE */
 
-        var generateMessage = function (msg, type) {
+        var generateMessage = function (msg, ownId, ownPic, type) {
           var data = {};
           if (msg.indexOf('___') != -1) {
             data.content = msg.split('___')[0];
           } else {
             data.content = msg;
           }
-          data.fromeMe = true;
+          data.userId = ownId;
           data.time = new Date();
           data.type = type;
+          data.pic = ownPic;
+          data.mediaId = null;
           return data;
         };
 
         /* TEXT */
         $scope.sendText = function () {
-          //var userIds = $stateParams.chatId.split('-');
-          console.log($scope.userModel.ownId + '**' +  + $scope.userModel.friendId);
           sendMessage($scope.msg + '___' + $scope.userModel.friendId);
-          var data = generateMessage($scope.msg, 'TEXT');
+          var data = generateMessage($scope.msg, $scope.userModel.ownId, $scope.userModel.ownPic, 'TEXT');
           $scope.messages.push(data);
-          messageService.sendText('', $scope.userModel.friendCode, $scope.msg);
+          messageService.sendText($scope.userModel.chatId, $scope.userModel.ownId, $scope.userModel.friendCode, $scope.userModel.ownPic, $scope.msg, 'TEXT');
           $scope.msg = '';
           viewScroll.scrollBottom();
         };

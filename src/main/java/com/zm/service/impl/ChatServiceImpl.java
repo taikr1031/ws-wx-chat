@@ -42,13 +42,13 @@ public class ChatServiceImpl extends GenericMongoServiceImpl<Chat> implements Ch
   }
 
   @Override
-  public void save(String chatId, String friendCode, String msg) {
+  public void save(String chatId, String ownId, String pic, String msg, String type) {
 	Query query = new Query(Criteria.where("id").is(chatId));
 	Message message = new Message();
-//	message.setFromeMe(true);
+	message.setUserId(ownId);
+	message.setPic(pic);
 	message.setContent(msg);
-	message.setPic("/pic");
-	message.setType("TEXT");
+	message.setType(type);
 	Update update = new Update().addToSet("messages", message);
 	this.getMongoTemplate().upsert(query, update, Chat.class);
   }

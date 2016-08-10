@@ -1,6 +1,7 @@
 package com.zm.controller;
 
 import com.zm.model.chat.Chat;
+import com.zm.model.chat.Message;
 import com.zm.model.user.User;
 import com.zm.service.ChatService;
 import com.zm.util.Constants;
@@ -41,9 +42,10 @@ public class ChatController {
   @RequestMapping("save")
   public void save(@RequestBody String msg, HttpServletRequest request) {
 	System.out.print(request.getQueryString());
-	String ownCode = ((User) request.getSession().getAttribute(Constants.SESSION_USERNAME)).getCode();
+	System.out.print(msg);
+	String ownCode = (String) request.getSession().getAttribute(Constants.WEBSOCKET_USERNAME);
 	String[] params = msg.split("&");
-	this.chatService.save(params[0].split("=")[1], params[1].split("=")[1], params[2].split("=")[1]);
+	this.chatService.save(params[0].split("=")[1], params[1].split("=")[1], params[2].split("=")[1], params[3].split("=")[1], params[4].split("=")[1]);
   }
 
   public String getOpenid() {
