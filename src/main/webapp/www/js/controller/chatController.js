@@ -2,7 +2,10 @@ angular.module('chat.chatController', [])
 
     .controller('chatCtrl', function ($rootScope, $scope, $state, $stateParams, $ionicPopup, $timeout, localStorageService, chatService) {
       $scope.$on("$ionicView.beforeEnter", function () {
-        $scope.userName = $stateParams.userName;
+        //$scope.userModel.userName = $stateParams.userName;
+        $scope.userModel = {
+          userName: $stateParams.userName
+        };
         var promiseChats = chatService.queryChat(); // 同步调用，获得承诺接口
         promiseChats.then(function(data) { // 调用承诺API获取数据 .resolve
           $scope.chats = data.chatList;
@@ -13,8 +16,8 @@ angular.module('chat.chatController', [])
         console.log($scope.chats);
 
         var userId = chatService.getUserId();
-        $scope.userId = userId;
-        console.log('beforeEnter userId: ' + $scope.userId);
+        $scope.userModel.userId = userId;
+        console.log('beforeEnter userId: ' + $scope.userModel.userId);
 
         $scope.popup = {
           isPopup: false,
@@ -78,10 +81,11 @@ angular.module('chat.chatController', [])
         chatService.updateChat(message);
       };
 
-      $scope.toMessage = function (chatId, userName, index) {
+      $scope.toMessage = function (chatId, ownId, ownName, index) {
         $state.go("message", {
           "chatId": chatId,
-          "userName": userName,
+          "ownId": ownId,
+          "ownName": ownName,
           "chatIndex": index
         });
       };

@@ -56,19 +56,6 @@ angular.module('chat.chatService', [])
             return userId;
           },
 
-          getAmountMessageById: function (num, id) {
-            var chats = [];
-            var chat = localStorageService.get("chat_" + id).messages;
-            var length = 0;
-            if (num < 0 || !chat) return;
-            length = chat.length;
-            if (num < length) {
-              chats = chat.splice(length - num, length);
-              return chats;
-            } else {
-              return chat;
-            }
-          },
           updateChat: function (chat) {
             var id = 0;
             if (chat) {

@@ -7,7 +7,7 @@ angular.module('chat.messageController', [])
           str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
         }
         return str.join("&");
-      }
+      };
       $httpProvider.defaults.headers.post = {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -45,25 +45,39 @@ angular.module('chat.messageController', [])
         // 页面载入事件
         $scope.$on("$ionicView.beforeEnter", function () {
           var chatIndex = parseInt($stateParams.chatIndex);
+          var userIds = $stateParams.chatId.split('-');
+          var friendId = (userIds[0] == $stateParams.ownId) ? userIds[1] : userIds[0];
+          $scope.userModel = {
+            chatId: $stateParams.chatId,
+            ownId: $stateParams.ownId,
+            ownName: $stateParams.ownName,
+            friendId: friendId
+          };
           var promiseChat = messageService.queryMessage($stateParams.chatId); // 同步调用，获得承诺接口
           promiseChat.then(function(data) { // 调用承诺API获取数据 .resolve
             $scope.messages = data.messageList;
           }, function(data) { // 处理错误 .reject
             console.log('queryMessage error!');
           });
-          var userIds = $stateParams.chatId.split('-');
-
+          console.log($scope.userModel.ownId + '-=' + $scope.userModel.ownName);
           // 将该聊天信息的未读条数清除和未读状态
-          if($scope.userId == userIds[0]) {
+          //if($scope.userId == userIds[0]) {
+          if($rootScope.chatList[chatIndex].auserId == friendId) {
             $rootScope.chatList[chatIndex].auserNoReadNum = 0;
             $rootScope.chatList[chatIndex].auserShowHints = false;
           } else {
             $rootScope.chatList[chatIndex].buserNoReadNum = 0;
             $rootScope.chatList[chatIndex].buserShowHints = false;
           }
+          // 设置聊天对象的openid
+          if($rootScope.chatList[chatIndex].auserId == friendId) {
+            $scope.userModel.friendCode = $rootScope.chatList[chatIndex].auserCode;
+          } else {
+            $scope.userModel.friendCode = $rootScope.chatList[chatIndex].buserCode;
+          }
           //messageService.updateChat($scope.chat);
           $scope.messageNum = 10;
-          $scope.messages = messageService.getAmountMessageById($scope.messageNum, $stateParams.chatId);
+          //$scope.messages = messageService.getAmountMessageById($scope.messageNum, $stateParams.chatId);
           $timeout(function () {
             viewScroll.scrollBottom();
           }, 0);
@@ -75,7 +89,14 @@ angular.module('chat.messageController', [])
         $scope.doRefresh = function () {
           $scope.messageNum += 5;
           $timeout(function () {
-            $scope.messages = messageService.getAmountMessageById($scope.messageNum, $stateParams.chatId);
+            // duplicate
+            var promiseChat = messageService.queryMessage($stateParams.chatId); // 同步调用，获得承诺接口
+            promiseChat.then(function(data) { // 调用承诺API获取数据 .resolve
+              $scope.messages = data.messageList;
+            }, function(data) { // 处理错误 .reject
+              console.log('queryMessage error!');
+            });
+
             $scope.$broadcast('scroll.refreshComplete');
           }, 1);
         };
@@ -312,11 +333,11 @@ angular.module('chat.messageController', [])
         /* TEXT */
         $scope.sendText = function () {
           //var userIds = $stateParams.chatId.split('-');
-          console.log($scope.userId + '-=' + $scope.friendId + '**' +  + $rootScope.friendId);
-          sendMessage($scope.msg + '___' + $rootScope.friendId);
+          console.log($scope.userModel.ownId + '**' +  + $scope.userModel.friendId);
+          sendMessage($scope.msg + '___' + $scope.userModel.friendId);
           var data = generateMessage($scope.msg, 'TEXT');
           $scope.messages.push(data);
-          messageService.sendText($scope.chat.id, $scope.chat.friendCode, $scope.msg);
+          messageService.sendText('', $scope.userModel.friendCode, $scope.msg);
           $scope.msg = '';
           viewScroll.scrollBottom();
         };

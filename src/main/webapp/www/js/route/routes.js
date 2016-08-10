@@ -19,7 +19,7 @@ angular.module('chat.routes', [])
             }
           })
           .state('message', {
-            url: '/message/:chatId/:chatIndex',
+            url: '/message/:chatId/:ownId/:ownName/:chatIndex',
             templateUrl: "templates/message.html",
             controller: "messageCtrl"
           })

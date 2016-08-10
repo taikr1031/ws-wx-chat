@@ -29,11 +29,11 @@ angular.module('chat.messageService', [])
             return $http.get(url).then(function (res) {
               console.log('TEXT success');
               //this.saveMessage(openid, msg);
-              var url = 'http://' + IP + ':' + PORT + '/chat/save';
+              var url = SITE + '/chat/save';
               var data = {
-                chatId: chatId,
-                openid: openid,
-                msg: msg
+                //chatId: chatId,
+                //openid: openid,
+                //msg: msg
               };
               console.log('saveMessage' + data);
               $http({
@@ -55,32 +55,32 @@ angular.module('chat.messageService', [])
           },
 
           sendImage: function (openid, msg) {
-            var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=IMAGE&openid=' + openid + '&content=' + msg;
+            var url = SITE + '/wxServlet?type=IMAGE&openid=' + openid + '&content=' + msg;
             return $http.get(url).then(function (res) {
               console.log('IMAGE success');
             });
           },
 
           sendVoice: function (openid, mediaId) {
-            var url = 'http://' + IP + ':' + PORT + '/wxServlet?type=VOICE&openid=' + openid + '&content=' + mediaId;
+            var url = SITE + '/wxServlet?type=VOICE&openid=' + openid + '&content=' + mediaId;
             return $http.get(url).then(function (res) {
               console.log('VOICE success');
             });
           },
 
-          getAmountMessageById: function (num, id) {
-            var chats = [];
-            var chat = localStorageService.get("chat_" + id).messages;
-            var length = 0;
-            if (num < 0 || !chat) return;
-            length = chat.length;
-            if (num < length) {
-              chats = chat.splice(length - num, length);
-              return chats;
-            } else {
-              return chat;
-            }
-          }
+          //getAmountMessageById: function (num, id) {
+          //  var chats = [];
+          //  var chat = localStorageService.get("chat_" + id).messages;
+          //  var length = 0;
+          //  if (num < 0 || !chat) return;
+          //  length = chat.length;
+          //  if (num < length) {
+          //    chats = chat.splice(length - num, length);
+          //    return chats;
+          //  } else {
+          //    return chat;
+          //  }
+          //}
         };
       }
     ]);
