@@ -13,6 +13,7 @@ public class Message extends GenericObject {
   private String type;
   private String mediaId;
   private Timestamp time;
+  private boolean read;
 
 //  public boolean isFromeMe() {
 //	return fromeMe;
@@ -68,5 +69,13 @@ public class Message extends GenericObject {
 
   public void setMediaId(String mediaId) {
 	this.mediaId = mediaId;
+  }
+
+  public boolean isRead() {
+	return read;
+  }
+
+  public void setRead(boolean read) {
+	this.read = read;
   }
 }

@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Timestamp;
 
-public class UserTest extends GenericMongoServiceImpl<User>{
+public class UserInitDB extends GenericMongoServiceImpl<User>{
 
   private static GenericMongoService mongoService;
 

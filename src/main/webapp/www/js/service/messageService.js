@@ -30,11 +30,12 @@ angular.module('chat.messageService', [])
                 method: 'POST',
                 url: saveUrl,
                 data: data,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 transformRequest: function (obj) {
                   var str = [];
                   for (var p in obj) {
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    //str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    str.push(p + "=" + obj[p]);
                   }
                   return str.join("&");
                 }

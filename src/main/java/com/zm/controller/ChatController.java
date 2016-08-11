@@ -7,10 +7,12 @@ import com.zm.service.ChatService;
 import com.zm.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +20,8 @@ import java.util.List;
 @RequestMapping("chat")
 public class ChatController {
 
-  private String openid;
   private String msg;
+  private String openid;
 
   @Autowired
   private ChatService chatService;
@@ -39,13 +41,32 @@ public class ChatController {
 	return chats;
   }
 
-  @RequestMapping("save")
+  @RequestMapping("/save")
   public void save(@RequestBody String msg, HttpServletRequest request) {
-	System.out.print(request.getQueryString());
-	System.out.print(msg);
-	String ownCode = (String) request.getSession().getAttribute(Constants.WEBSOCKET_USERNAME);
+//	String ownCode = (String) request.getSession().getAttribute(Constants.WEBSOCKET_USERNAME);
 	String[] params = msg.split("&");
-	this.chatService.save(params[0].split("=")[1], params[1].split("=")[1], params[2].split("=")[1], params[3].split("=")[1], params[4].split("=")[1]);
+	try {
+	  Message message = generateMessage(params[1].split("=")[1], params[2].split("=")[1], params[3].split("=")[1], params[4].split("=")[1]);
+	  this.chatService.save(params[0].split("=")[1], message);
+	} catch (UnsupportedEncodingException e) {
+	  e.printStackTrace();
+	}
+  }
+
+  @RequestMapping("/update/{chatId}/{userId}")
+  public void update(@PathVariable String chatId, @PathVariable String userId) {
+	this.chatService.update(chatId, userId);
+  }
+
+  private Message generateMessage(String ownId, String pic, String msg, String type) throws UnsupportedEncodingException {
+	String fristDecodeChatset = "ISO8859-1";
+	String secondDecodeChatset = "GB2312";
+	Message message = new Message();
+	message.setUserId(new String(ownId.getBytes(fristDecodeChatset), secondDecodeChatset));
+	message.setPic(new String(pic.getBytes(fristDecodeChatset), secondDecodeChatset));
+	message.setContent(new String(msg.getBytes(fristDecodeChatset), secondDecodeChatset));
+	message.setType(new String(type.getBytes(fristDecodeChatset), secondDecodeChatset));
+	return message;
   }
 
   public String getOpenid() {

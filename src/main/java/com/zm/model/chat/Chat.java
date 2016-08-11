@@ -2,6 +2,7 @@ package com.zm.model.chat;
 
 import com.zm.model.GenericObject;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 @Document
 public class Chat extends GenericObject {
 
-  private String[] ids;
   private String auserId;
   private String auserPic;
   private String auserCode;
@@ -21,8 +21,6 @@ public class Chat extends GenericObject {
   private String buserCode;
   private String buserName;
 
-  private int auserNoReadNum;
-  private int buserNoReadNum;
   private long auserTimeFrome1970;
   private long buserTimeFrome1970;
   private Timestamp auserOriginalTime;
@@ -32,16 +30,10 @@ public class Chat extends GenericObject {
   private boolean auserShowHints; // 标记为未读
   private boolean buserShowHints;
 
+  private int noReadMsgNum;
+
   private Message lastMessage;
   private List<Message> messages;
-
-  public String[] getIds() {
-	return ids;
-  }
-
-  public void setIds(String[] ids) {
-	this.ids = ids;
-  }
 
   public long getBuserTimeFrome1970() {
 	return buserTimeFrome1970;
@@ -115,22 +107,6 @@ public class Chat extends GenericObject {
 	this.buserName = buserName;
   }
 
-  public int getAuserNoReadNum() {
-	return auserNoReadNum;
-  }
-
-  public void setAuserNoReadNum(int auserNoReadNum) {
-	this.auserNoReadNum = auserNoReadNum;
-  }
-
-  public int getBuserNoReadNum() {
-	return buserNoReadNum;
-  }
-
-  public void setBuserNoReadNum(int buserNoReadNum) {
-	this.buserNoReadNum = buserNoReadNum;
-  }
-
   public long getAuserTimeFrome1970() {
 	return auserTimeFrome1970;
   }
@@ -185,6 +161,14 @@ public class Chat extends GenericObject {
 
   public void setBuserShowHints(boolean buserShowHints) {
 	this.buserShowHints = buserShowHints;
+  }
+
+  public int getNoReadMsgNum() {
+	return noReadMsgNum;
+  }
+
+  public void setNoReadMsgNum(int noReadMsgNum) {
+	this.noReadMsgNum = noReadMsgNum;
   }
 
   public Message getLastMessage() {

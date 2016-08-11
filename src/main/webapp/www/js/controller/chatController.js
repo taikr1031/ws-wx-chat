@@ -82,6 +82,8 @@ angular.module('chat.chatController', [])
       };
 
       $scope.toMessage = function (chatId, ownId, ownName, index) {
+        var friendId = chatId.split('-')[0] == ownId ? chatId.split('-')[1] : chatId.split('-')[0];
+        chatService.updateChat(chatId, friendId);
         $state.go("message", {
           "chatId": chatId,
           "ownId": ownId,

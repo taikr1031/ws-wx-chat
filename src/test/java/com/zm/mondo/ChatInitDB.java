@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class ChatTest {
+public class ChatInitDB {
 
   public static void main(String[] args) {
 	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"classpath:/spring-mongodb-test.xml"});
@@ -57,8 +57,6 @@ public class ChatTest {
 	chat.setBuserCode(buserCode);
 	chat.setAuserName(auserName);
 	chat.setBuserName(buserName);
-	chat.setAuserNoReadNum(num);
-	chat.setBuserNoReadNum(num);
 	chat.setAuserTimeFrome1970(new Date().getTime());
 	chat.setBuserTimeFrome1970(new Date().getTime());
 	chat.setAuserShowHints(false);
@@ -67,21 +65,23 @@ public class ChatTest {
 	chat.setBuserOriginalTime(new Timestamp(System.currentTimeMillis()));
 
 	Message msg1 = new Message();
-//	msg1.setId(auserId);
+	msg1.setId(chat.getId());
 	msg1.setUserId("1");
 	msg1.setContent("content" + auserId);
 	msg1.setPic("/www/img/" + auserId + ".png");
 	msg1.setType("TEXT");
 	msg1.setMediaId("mdeia" + auserId);
+	msg1.setRead(false);
 	chat.addMessage(msg1);
 
 	Message msg2 = new Message();
-//	msg2.setId(buserId);
+	msg2.setId(chat.getId());
 	msg2.setUserId("2");
 	msg2.setContent("content" + buserId);
 	msg2.setPic("/www/img/" + buserId + ".png");
 	msg2.setType("TEXT");
 	msg2.setMediaId("mdeia" + buserId);
+	msg2.setRead(false);
 	chat.setLastMessage(msg2);
 	chat.addMessage(msg2);
 

@@ -31,7 +31,7 @@ angular.module('chat.chatService', [])
           },
 
           queryChat: function () {
-            var url = 'http://' + IP + ':' + PORT + '/chat/queryChat.json';
+            var url = SITE + '/chat/queryChat.json';
             var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
             $http({method: 'GET', url: url}).success(function (data, status, headers, config) {
               deferred.resolve(data);
@@ -42,7 +42,7 @@ angular.module('chat.chatService', [])
           },
 
           getUserId: function () {
-            var url = 'http://' + IP + ':' + PORT + '/user/getUserId.json';
+            var url = SITE + '/user/getUserId.json';
             var userId;
             $.ajax({
               async: false,
@@ -50,19 +50,30 @@ angular.module('chat.chatService', [])
               url: url,
               dataType: 'json',
               success: function (data) {
-                userId = data.stringList[0];
+                if(data.stringList.size > 0) {
+                  userId = data.stringList[0];
+                }
               }
             });
             return userId;
           },
 
-          updateChat: function (chat) {
-            var id = 0;
-            if (chat) {
-              id = chat.id;
-              localStorageService.update("chat_" + id, chat);
-            }
+          updateChat: function (chatId, friendId) {
+            var url = SITE + '/chat/update/' + chatId + '/' + friendId + '.json';
+            $http.get(url).then(function (res) {
+              console.log('chat update success');
+            });
+            //$.ajax({
+            //  async: false,
+            //  type: 'GET',
+            //  url: url,
+            //  dataType: 'json',
+            //  success: function (data) {
+            //    console.log('chat update success');
+            //  }
+            //});
           },
+
           deleteChatId: function (id) {
             var chatId = localStorageService.get("chatID");
             var length = 0;
