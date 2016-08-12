@@ -25,10 +25,10 @@ public class Chat extends GenericObject {
   private long buserTimeFrome1970;
   private Timestamp auserOriginalTime;
   private Timestamp buserOriginalTime;
-  private boolean auserTop;
-  private boolean buserTop;
-  private boolean auserShowHints; // 标记为未读
-  private boolean buserShowHints;
+  private Boolean auserTop;
+  private Boolean buserTop;
+  private Boolean auserShowHints; // 标记为未读
+  private Boolean buserShowHints;
 
   private int noReadMsgNum;
 
@@ -131,35 +131,35 @@ public class Chat extends GenericObject {
 	this.buserOriginalTime = buserOriginalTime;
   }
 
-  public boolean isAuserTop() {
+  public Boolean getAuserTop() {
 	return auserTop;
   }
 
-  public void setAuserTop(boolean auserTop) {
+  public void setAuserTop(Boolean auserTop) {
 	this.auserTop = auserTop;
   }
 
-  public boolean isBuserTop() {
+  public Boolean getBuserTop() {
 	return buserTop;
   }
 
-  public void setBuserTop(boolean buserTop) {
+  public void setBuserTop(Boolean buserTop) {
 	this.buserTop = buserTop;
   }
 
-  public boolean isAuserShowHints() {
+  public Boolean getAuserShowHints() {
 	return auserShowHints;
   }
 
-  public void setAuserShowHints(boolean auserShowHints) {
+  public void setAuserShowHints(Boolean auserShowHints) {
 	this.auserShowHints = auserShowHints;
   }
 
-  public boolean isBuserShowHints() {
+  public Boolean getBuserShowHints() {
 	return buserShowHints;
   }
 
-  public void setBuserShowHints(boolean buserShowHints) {
+  public void setBuserShowHints(Boolean buserShowHints) {
 	this.buserShowHints = buserShowHints;
   }
 

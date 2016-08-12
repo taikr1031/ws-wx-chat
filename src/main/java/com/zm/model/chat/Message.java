@@ -1,27 +1,20 @@
 package com.zm.model.chat;
 
 import com.zm.model.GenericObject;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Timestamp;
 
+@Document
 public class Message extends GenericObject {
 
-//  private boolean fromeMe;
   private String userId;
   private String content;
   private String pic;
   private String type;
   private String mediaId;
   private Timestamp time;
-  private boolean read;
-
-//  public boolean isFromeMe() {
-//	return fromeMe;
-//  }
-//
-//  public void setFromeMe(boolean fromeMe) {
-//	this.fromeMe = fromeMe;
-//  }
+  private Boolean read;
 
   public String getUserId() {
 	return userId;
@@ -71,11 +64,11 @@ public class Message extends GenericObject {
 	this.mediaId = mediaId;
   }
 
-  public boolean isRead() {
+  public Boolean getRead() {
 	return read;
   }
 
-  public void setRead(boolean read) {
+  public void setRead(Boolean read) {
 	this.read = read;
   }
 }

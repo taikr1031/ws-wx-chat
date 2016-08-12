@@ -50,7 +50,7 @@ angular.module('chat.chatService', [])
               url: url,
               dataType: 'json',
               success: function (data) {
-                if(data.stringList.size > 0) {
+                if(data.stringList != null) {
                   userId = data.stringList[0];
                 }
               }

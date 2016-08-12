@@ -4,8 +4,6 @@ import com.zm.model.chat.Chat;
 import com.zm.model.chat.Message;
 import com.zm.mongo.core.GenericMongoServiceImpl;
 import com.zm.service.ChatService;
-import com.zm.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -25,15 +23,19 @@ public class ChatServiceImpl extends GenericMongoServiceImpl<Chat> implements Ch
 	query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "originalTime")));
 	List<Chat> chats = getMongoTemplate().find(query, Chat.class);
 	for (Chat chat : chats) {
-	  int num = getNoReadMsgNum(chat.getId(), userId);
+	  int num = getNoReadMsgNum(chat.getId(), getOtherUserId(chat.getId(), userId));
 	  chat.setNoReadMsgNum(num);
 	}
 	return chats;
   }
 
+  private String getOtherUserId(String chatId, String userId) {
+	return chatId.split("-")[0].equals(userId) ? chatId.split("-")[1] : chatId.split("-")[0];
+  }
+
   public int getNoReadMsgNum(String chatId, String userId) {
 	Query query = new Query();
-	query.addCriteria(Criteria.where("id").is(chatId).and("messages.userId").is(userId).and("read").exists(false));
+	query.addCriteria(Criteria.where("id").is(chatId).and("messages.userId").is(userId).and("messages.read").is(false));
 	int num = (int) getMongoTemplate().count(query, Chat.class);
 	System.out.println(chatId + "-" + userId + "=" + num);
 	return num;
@@ -59,8 +61,8 @@ public class ChatServiceImpl extends GenericMongoServiceImpl<Chat> implements Ch
   @Override
   public void update(String chatId, String userId) {
 	Query query = new Query();
-	query.addCriteria(Criteria.where("id").is(chatId).and("messages").elemMatch(Criteria.where("userId").is(userId)));
-	Update update = new Update().set("read", true);
+	query.addCriteria(Criteria.where("id").is(chatId).and("messages.userId").is(userId).and("messages.read").is(false));
+	Update update = Update.update("messages.$.read", true).set("messages.$.content", "content1");
 	this.getMongoTemplate().updateMulti(query, update, Chat.class);
   }
 
